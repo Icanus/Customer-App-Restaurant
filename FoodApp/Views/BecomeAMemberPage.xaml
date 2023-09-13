@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FoodApp.ViewModels"
+             xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:md="clr-namespace:FoodApp.MaterialDesign"
+             xmlns:res="clr-namespace:FoodApp.Resources"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:template="clr-namespace:FoodApp.ControlTemplates"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             xmlns:local="clr-namespace:FoodApp.Behaviors" 
+             xmlns:controls="clr-namespace:FoodApp.Controls" xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions" xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             ios:Page.UseSafeArea="true"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},
+                Light={StaticResource BackgroundColorLight}}"
+             x:Class="FoodApp.Views.BecomeAMemberPage">
+    <AbsoluteLayout x:Name="PageLayout">
+        <RelativeLayout>
+            <ScrollView RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,
+                        Property=Width, Factor=1}"
+                    RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,
+                        Property=Height, Factor=1}" Margin="0,0,0,60">
+
+                <StackLayout Padding="30" Spacing="10" VerticalOptions="FillAndExpand" HorizontalOptions="Center">
+                    <Grid HorizontalOptions="FillAndExpand">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80*"/>
+                            <ColumnDefinition Width="20*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" Style="{StaticResource BoldTitlePrimaryLabelStyle}" Text="Agreement" VerticalOptions="Center"/>
+
+                        <abstractions:TintedImage
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="End"
+                                        Grid.Column="1"
+                                         BackgroundColor="Transparent">
+
+                            <abstractions:TintedImage.Source>
+
+                                <FontImageSource Glyph="{x:Static md:Icons.Close}"
+                                                     FontFamily="Material"
+                                                     Color="WhiteSmoke"
+                                                     Size="30" />
+
+                            </abstractions:TintedImage.Source>
+                            <abstractions:TintedImage.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                        Command="{Binding CloseCommand}"
+                                        CommandParameter="{Binding .}" />
+                            </abstractions:TintedImage.GestureRecognizers>
+                        </abstractions:TintedImage>
+                    </Grid>
+                    <BoxView Margin="10" BackgroundColor="#d3d3d3" HeightRequest="1"/>
+                    <forms:CachedImage Source="member_card"/>
+                    <Label 
+                        FontSize="Small" Text="We highly recommend that you invest time in thoroughly reading and comprehending the loyalty program's procedures before consenting to partake in this initiative. Understanding the program clearly is essential before agreeing to participate."/>
+                    <Label 
+                        FontSize="Small" Text="Here's a general outline of the terms and conditions of the restaurant's loyalty program:"/>
+
+
+                    <Label
+                        HorizontalTextAlignment="Start"
+                        LineBreakMode="WordWrap"
+                        FontSize="Small"
+                       Margin="0, 10, 0, 0"
+                       Style="{StaticResource MediumSecondaryLabelStyle}">
+
+                        <Label.FormattedText>
+
+                            <FormattedString>
+                                <Span FontSize="Small" Text="A. Points Awards" TextColor="{StaticResource colorAccent}"/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="1. Enrolment: Information about how customers can enrol in the loyalty program, whether it's through an online sign-up form, a mobile app, or in-store registration however we do strongly encourage to enrol via the App."/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="2. Point Accumulation: Only purchases made through the App will be eligible for points under the loyalty program. Details on how customers earn points, such as the number of points awarded per dollar spent on qualifying purchases." />
+                                <Span Text="&#x0a;"/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="3. Redemption Options: Information about the rewards available and how customers can redeem their accumulated points. This could include discounts on future meals, free items, or other special offers."/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="4. Point Expiry: If applicable, the duration for which points are valid before they expire."/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="5. Eligibility: Any eligibility criteria for participation in the loyalty program, such as minimum age requirements or residency restrictions."/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="6. Program Changes: The restaurant's right to modify or terminate the loyalty program, and how customers will be notified of such changes"/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="7. Privacy Policy: Information on how the restaurant collects, uses, and protects customer data in the context of the loyalty program"/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="8. Communication: How the restaurant will communicate with loyalty program members, including updates, promotions, and special offers."/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="9. Terms Enforcement: Guidelines on the consequences of violating the loyalty program's terms and conditions, such as potential account suspension or termination."/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="10. Dispute Resolution: Information on how disputes or issues related to the loyalty program may be handled."/>
+                            </FormattedString>
+
+                        </Label.FormattedText>
+
+                    </Label>
+                    <Label 
+                        FontSize="Small" Text="It's important to carefully read the specific terms and conditions of the restaurant's loyalty program before enrolling to understand the program's rules, benefits, and any limitations."/>
+
+                    <Label
+                        HorizontalTextAlignment="Start"
+                        LineBreakMode="WordWrap"
+                        FontSize="Small"
+                       Margin="0, 10, 0, 0"
+                       Style="{StaticResource MediumSecondaryLabelStyle}">
+
+                        <Label.FormattedText>
+
+                            <FormattedString>
+                                <Span FontSize="Small" Text="B. Points Transfer" TextColor="{StaticResource colorAccent}"/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="1. Eligibility: To engage in points transfer, both the sender and the recipient must be active members of the loyalty program for a minimum duration of one year."/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="2. Points Limit: There might be a limit on the number of points that can be transferred in each period or in a single transaction" />
+                                <Span Text="&#x0a;"/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="3. Transfer Fee: In some cases, a loyalty program may charge a fee for transferring points between customers, certain number of points will be deducted for transfer of points"/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="4. Redemption Restrictions: Transferred points may have limitations on how they can be used or redeemed."/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="5. Verification Process: To prevent unauthorized transfers, the loyalty program might require a verification process before completing the transfer"/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="6. Frequency Limits: There may be restrictions on how frequently points can be transferred between customers. Once points are successfully transferred, the receiving customer will inherit the expiry date associated with those points from the previous customer. "/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="&#x0a;"/>
+                                <Span Text="7. Expired Points: Once points have expired, they become unusable and cannot be revived or transferred to another customer."/>
+                            </FormattedString>
+
+                        </Label.FormattedText>
+
+                    </Label>
+
+                    <Label
+                        LineBreakMode="WordWrap"
+                        FontSize="Small"
+                       Margin="0, 10, 0, 0"
+                       Style="{StaticResource MediumSecondaryLabelStyle}">
+
+                        <Label.FormattedText>
+
+                            <FormattedString>
+                                <Span Text="Note: " TextColor="Red"/>
+                                <Span TextColor="Red" Text="The onus of responsibly managing points lies with the customers, and the restaurant shall not assume any liability or accountability for any points-related problems arising from the actions of the account holder. It is imperative that due caution and prudence be exercised while handling points during any transaction." />
+                            </FormattedString>
+
+                        </Label.FormattedText>
+
+                    </Label>
+                   
+
+                    <ContentView HeightRequest="134"/>
+
+
+                </StackLayout>
+
+            </ScrollView>
+            <pv:PancakeView Style="{StaticResource ButtonPanelStyle}"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression
+                            Type=RelativeToParent, Property=Width, Factor=1}"
+                        RelativeLayout.YConstraint="{ConstraintExpression
+                            Type=RelativeToParent, Property=Height, Factor=1,
+                            Constant=-190}">
+
+                <pv:PancakeView.Shadow>
+                    <pv:DropShadow />
+                </pv:PancakeView.Shadow>
+
+                <StackLayout Spacing="30">
+
+                    <Label 
+                        FontSize="Small" Text=" By clicking the I Agree Button, I hereby give my consent and confirm my full understanding of the loyalty program's process. I am committed to participating in the program accordingly."/>
+                    <Button Style="{StaticResource PrimaryButtonStyle}"
+                        Text="I Agree"
+                        Command="{Binding IAgreeCommand}"
+                        HeightRequest="50"/>
+
+                </StackLayout>
+
+            </pv:PancakeView>
+
+        </RelativeLayout>
+        <BoxView x:Name="Filter"
+                     AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="All"
+                     BackgroundColor="#d3d3d3"
+                     IsVisible="{Binding IsBusy}"
+                     Opacity="0.60" />
+        <ActivityIndicator  IsRunning="True"
+                            VerticalOptions="CenterAndExpand"
+                            IsVisible="{Binding IsBusy}"
+                            HorizontalOptions="CenterAndExpand"
+                             AbsoluteLayout.LayoutBounds="0.5,0.5,0.5,0.5"
+                                        AbsoluteLayout.LayoutFlags="All"/>
+    </AbsoluteLayout>
+</ContentPage>

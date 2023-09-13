@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FoodApp.ViewModels"
+             xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:md="clr-namespace:FoodApp.MaterialDesign"
+             xmlns:res="clr-namespace:FoodApp.Resources" xmlns:customview="clr-namespace:FoodApp.CustomViews"
+             x:Class="FoodApp.Views.CheckoutAddressPage"
+             Title="{Binding Title}"
+             BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},
+                Light={StaticResource BackgroundColorLight}}">
+
+    <ContentPage.ToolbarItems>
+
+        <ToolbarItem Text="{x:Static res:AppResources.Add}"
+                     Command="{Binding AddCommand}">
+
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="Material"
+                                 Glyph="{x:Static md:Icons.Add}" />
+
+            </ToolbarItem.IconImageSource>
+
+        </ToolbarItem>
+
+        <ToolbarItem Text="{x:Static res:AppResources.Edit}"
+                     Command="{Binding EditCommand}">
+
+            <ToolbarItem.IconImageSource>
+
+                <FontImageSource FontFamily="Material"
+                                 Glyph="{x:Static md:Icons.EditNote }" />
+
+            </ToolbarItem.IconImageSource>
+
+        </ToolbarItem>
+
+    </ContentPage.ToolbarItems>
+    <AbsoluteLayout>
+        <Grid RowDefinitions="Auto, *, Auto">
+            <StackLayout Grid.Row="1">
+                <customview:DeviceOfflineView Margin="5" IsVisible="{Binding IsNotConnected}" />
+                <RefreshView
+                     x:DataType="vm:CheckoutAddressViewModel"
+                     Command="{Binding LoadItemsCommand}"
+                     IsRefreshing="{Binding IsBusy, Mode=TwoWay}"
+                     Padding="5">
+
+                    <CollectionView ItemsSource="{Binding Items}"
+                            SelectionMode="None"
+                            VerticalOptions="Start">
+
+                        <CollectionView.ItemsLayout>
+
+                            <LinearItemsLayout Orientation="Vertical"
+                                       ItemSpacing="0" />
+
+                        </CollectionView.ItemsLayout>
+
+                        <CollectionView.ItemTemplate>
+
+                            <DataTemplate>
+
+                                <ContentView Padding="10">
+
+                                    <pv:PancakeView x:DataType="vm:AddressViewModel"
+                                            CornerRadius="20,20,20,20"
+                                            BackgroundColor="{AppThemeBinding Light={StaticResource CardColorLight},
+                                                Dark={StaticResource CardColorDark}}">
+
+                                        <StackLayout Padding="10">
+
+                                            <StackLayout Orientation="Horizontal">
+
+                                                <StackLayout HorizontalOptions="FillAndExpand">
+
+                                                    <Label Text="{Binding Address.Title}"
+                                                   Style="{StaticResource MediumSecondaryLabelStyle}" />
+
+                                                    <Label Text="{Binding Address}"
+                                                   Style="{StaticResource SmallSecondaryLabelStyle}" />
+
+                                                </StackLayout>
+
+                                                <pv:PancakeView CornerRadius="15, 15, 15, 15"
+                                                        WidthRequest="30"
+                                                        HeightRequest="30"
+                                                        BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                                                            Dark={StaticResource PrimaryColorDark}}"
+                                                        VerticalOptions="Start"
+                                                        HorizontalOptions="Center"
+                                                        IsVisible="{Binding IsSelected}">
+
+                                                    <Label Text="{x:Static md:Icons.Check}"
+                                                   TextColor="WhiteSmoke"
+                                                   FontFamily="Material"
+                                                   FontSize="20"
+                                                   VerticalOptions="Center"
+                                                   HorizontalOptions="Center" />
+
+                                                </pv:PancakeView>
+
+                                            </StackLayout>
+
+                                            <StackLayout.GestureRecognizers>
+
+                                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                              Command="{Binding Source={RelativeSource
+                                                                AncestorType={x:Type vm:CheckoutAddressViewModel}}, Path=AddressCommand}"
+                                                              CommandParameter="{Binding .}" />
+
+                                            </StackLayout.GestureRecognizers>
+
+                                        </StackLayout>
+
+                                    </pv:PancakeView>
+
+                                </ContentView>
+
+                            </DataTemplate>
+
+                        </CollectionView.ItemTemplate>
+
+                        <CollectionView.EmptyView>
+
+                            <Grid RowDefinitions="Auto, *, Auto">
+
+                                <ContentView />
+
+                                <StackLayout Padding="30" Spacing="10" Grid.Row="1" VerticalOptions="Center">
+
+                                    <Label Text="{x:Static res:AppResources.NoItems}"
+                                   Style="{StaticResource MediumSecondaryLabelStyle}"
+                                   HorizontalTextAlignment="Center" />
+
+                                    <Image Margin="20">
+
+                                        <Image.Source>
+
+                                            <FontImageSource Glyph="{x:Static md:Icons.Search}"
+                                                     FontFamily="Material"
+                                                     Color="{AppThemeBinding Light={StaticResource SecondaryTextColorLight},
+                                                        Dark={StaticResource SecondaryTextColorDark}}"
+                                                     Size="120" />
+
+                                        </Image.Source>
+
+                                    </Image>
+
+                                </StackLayout>
+
+                                <ContentView Grid.Row="2" />
+
+                            </Grid>
+
+                        </CollectionView.EmptyView>
+
+                    </CollectionView>
+
+                </RefreshView>
+            </StackLayout>
+
+            <pv:PancakeView Grid.Row="2"
+                        IsVisible="{Binding IsCheckout}"
+                        Style="{StaticResource ButtonPanelStyle}">
+
+            <pv:PancakeView.Shadow>
+                <pv:DropShadow />
+            </pv:PancakeView.Shadow>
+
+            <StackLayout>
+
+                <StackLayout Orientation="Horizontal">
+
+                    <Label Text="{x:Static res:AppResources.Total}"
+                           Style="{StaticResource MediumSecondaryLabelStyle}"
+                           HorizontalOptions="FillAndExpand" />
+
+                    <Label Text="{Binding Total, StringFormat='${0:F2}'}"
+                           Style="{StaticResource MediumSecondaryLabelStyle}"
+                           HorizontalOptions="FillAndExpand"
+                           HorizontalTextAlignment="End" />
+
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal">
+
+                    <Label Text="{x:Static res:AppResources.DeliveryCharge}"
+                           Style="{StaticResource MediumSecondaryLabelStyle}"
+                           HorizontalOptions="FillAndExpand" />
+
+                    <Label Text="{Binding Shipping, StringFormat='${0:F2}'}"
+                           Style="{StaticResource MediumSecondaryLabelStyle}"
+                           HorizontalOptions="FillAndExpand"
+                           HorizontalTextAlignment="End" />
+
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal">
+
+                    <Label Text="{x:Static res:AppResources.GrandTotal}"
+                           Style="{StaticResource BoldMediumSecondaryLabelStyle}"
+                           HorizontalOptions="FillAndExpand" />
+
+                    <Label Text="{Binding GrandTotal, StringFormat='${0:F2}'}"
+                           Style="{StaticResource BoldMediumSecondaryLabelStyle}"
+                           HorizontalOptions="FillAndExpand"
+                           HorizontalTextAlignment="End" />
+
+                </StackLayout>
+
+                <Button Style="{StaticResource PrimaryButtonStyle}"
+                        IsEnabled="{Binding IsButtonEnabled}"
+                        Text="{x:Static res:AppResources.Payment}"
+                        Command="{Binding PaymentCommand}"
+                        Margin="0,20,0,0" />
+
+            </StackLayout>
+
+        </pv:PancakeView>
+
+    </Grid>
+    <BoxView x:Name="Filter"
+                     AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="All"
+                     BackgroundColor="Transparent"
+                     IsVisible="{Binding IsBusy}"
+                     Opacity="0.90" />
+    <!--<ActivityIndicator  IsRunning="True"
+                            VerticalOptions="CenterAndExpand"
+                            IsVisible="{Binding IsBusy}"
+                            HorizontalOptions="CenterAndExpand"
+                             AbsoluteLayout.LayoutBounds="0.5,0.5,0.5,0.5"
+                                        AbsoluteLayout.LayoutFlags="All"/>-->
+    </AbsoluteLayout>
+</ContentPage>

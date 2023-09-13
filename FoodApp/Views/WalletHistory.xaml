@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             x:Class="FoodApp.Views.WalletHistory"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             ios:Page.UseSafeArea="true"
+             xmlns:md="clr-namespace:FoodApp.MaterialDesign"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             NavigationPage.HasNavigationBar="False"
+             xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions" xmlns:customview="clr-namespace:FoodApp.CustomViews">
+    <ContentPage.Content>
+        <AbsoluteLayout x:Name="PageLayout">
+            <RelativeLayout>
+                <StackLayout Spacing="10" VerticalOptions="FillAndExpand" HorizontalOptions="Center" RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,
+                        Property=Width, Factor=1}"
+                    RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,
+                        Property=Height, Factor=1}" Margin="0,0,0,0">
+                    <Grid HeightRequest="50" Padding="30">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30*"/>
+                            <ColumnDefinition Width="40*"/>
+                            <ColumnDefinition Width="30*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" Style="{StaticResource BoldTitlePrimaryLabelStyle}" Text="Points" VerticalOptions="Center"/>
+
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" 
+                                        Grid.Column="1">
+                            <Label Text="{Binding Balance, StringFormat='${0:F2}'}" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"
+                                        TextColor="{StaticResource colorAccent}" Style="{StaticResource BoldLargeLabelStyle}"/>
+                        </StackLayout>
+                        <abstractions:TintedImage
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="End"
+                                        Grid.Column="2"
+                                         BackgroundColor="Transparent">
+
+                            <abstractions:TintedImage.Source>
+
+                                <FontImageSource Glyph="{x:Static md:Icons.Close}"
+                                                     FontFamily="Material"
+                                                     Color="WhiteSmoke"
+                                                     Size="30" />
+
+                            </abstractions:TintedImage.Source>
+                            <abstractions:TintedImage.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                        Command="{Binding CloseCommand}"
+                                        CommandParameter="{Binding .}" />
+                            </abstractions:TintedImage.GestureRecognizers>
+                        </abstractions:TintedImage>
+                    </Grid>
+                    <BoxView Margin="30,0,30,0" BackgroundColor="#d3d3d3" HeightRequest="1"/>
+
+                    <customview:DeviceOfflineView Margin="5,0,5,-15" IsVisible="{Binding IsNotConnected}" />
+
+                    <StackLayout VerticalOptions="FillAndExpand" Padding="30">
+                        <CollectionView ItemsSource="{Binding LoyaltyPointsHistory}"
+                                SelectionMode="None"
+                                HorizontalScrollBarVisibility="Always">
+
+                            <CollectionView.ItemsLayout>
+
+                                <LinearItemsLayout Orientation="Vertical"
+                                   ItemSpacing="0" />
+
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+
+                                <DataTemplate>
+                                    <customview:HistoryList/>
+                                </DataTemplate>
+
+                            </CollectionView.ItemTemplate>
+
+                        </CollectionView>
+                    </StackLayout>
+                    <ContentView HeightRequest="134"/>
+
+
+                </StackLayout>
+
+                <pv:PancakeView Style="{StaticResource ButtonPanelStyle}"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression
+                            Type=RelativeToParent, Property=Width, Factor=1}"
+                        RelativeLayout.YConstraint="{ConstraintExpression
+                            Type=RelativeToParent, Property=Height, Factor=1,
+                            Constant=-90}">
+
+                    <pv:PancakeView.Shadow>
+                        <pv:DropShadow />
+                    </pv:PancakeView.Shadow>
+
+                    <StackLayout Spacing="30">
+
+                        <Button Style="{StaticResource PrimaryButtonStyle}"
+                        Text="Transfer Points"
+                        IsEnabled="{Binding IsTransferEnabled}"
+                        Command="{Binding TransferCommand}"
+                        HeightRequest="50"/>
+
+                    </StackLayout>
+
+                </pv:PancakeView>
+
+            </RelativeLayout>
+            <BoxView x:Name="Filter"
+                     AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="All"
+                     BackgroundColor="Transparent"
+                     IsVisible="{Binding IsBusy}"
+                     Opacity="1" />
+            <ActivityIndicator  IsRunning="True"
+                            VerticalOptions="CenterAndExpand"
+                            HorizontalOptions="CenterAndExpand"
+                             AbsoluteLayout.LayoutBounds="0.5,0.5,0.5,0.5"
+                             IsVisible="{Binding IsBusy}"
+                                        AbsoluteLayout.LayoutFlags="All"/>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

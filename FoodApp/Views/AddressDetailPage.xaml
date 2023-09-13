@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FoodApp.ViewModels"
+             xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:md="clr-namespace:FoodApp.MaterialDesign"
+             xmlns:res="clr-namespace:FoodApp.Resources"
+             x:Class="FoodApp.Views.AddressDetailPage"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             xmlns:controls="clr-namespace:FoodApp.Controls"
+             ios:Page.UseSafeArea="true"
+             BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},
+                Light={StaticResource BackgroundColorLight}}">
+
+    <ContentPage.BindingContext>
+        <vm:AddressDetailViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <controls:BindableToolbarItem IsVisible="{Binding HasAddress}"  Command="{Binding DeleteCommand}">
+            <ToolbarItem.IconImageSource>
+
+                <FontImageSource FontFamily="Material"
+                                 Glyph="{x:Static md:Icons.DeleteOutline}" />
+
+            </ToolbarItem.IconImageSource>
+        </controls:BindableToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <!--<RelativeLayout>
+
+        <ScrollView RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,
+                        Property=Width, Factor=1}"
+                    RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,
+                        Property=Height, Factor=1}">
+
+            <StackLayout Padding="20" Spacing="5">
+
+                <Label Text="{x:Static res:AppResources.LocationName}"
+                       Style="{StaticResource SmallTertiaryLabelStyle}" />
+
+                <controls:CustomEntry Padding="10" BorderColor="#d3d3d3" BorderWidth="1" BorderRadius="8" Text="{Binding AddressTitle, Mode=TwoWay}" />
+
+                <Label Text="{x:Static res:AppResources.AddressLine1}"
+                       Style="{StaticResource SmallTertiaryLabelStyle}"
+                       Margin="0, 10, 0, 0" />
+
+                <controls:CustomEntry Padding="10" BorderColor="#d3d3d3" BorderWidth="1" BorderRadius="8"  Text="{Binding Address1, Mode=TwoWay}" />
+
+                <Label Text="{x:Static res:AppResources.City}"
+                       Style="{StaticResource SmallTertiaryLabelStyle}"
+                       Margin="0, 10, 0, 0" />
+
+                <controls:CustomEntry Padding="10" BorderColor="#d3d3d3" BorderWidth="1" BorderRadius="8"  Text="{Binding City, Mode=TwoWay}" />
+
+                <Label Text="{x:Static res:AppResources.State}"
+                       Style="{StaticResource SmallTertiaryLabelStyle}"
+                       Margin="0, 10, 0, 0" />
+
+                <controls:CustomEntry Padding="10" BorderColor="#d3d3d3" BorderWidth="1" BorderRadius="8"  Text="{Binding State, Mode=TwoWay}" />
+
+                <Label Text="{x:Static res:AppResources.PostCode}"
+                       Style="{StaticResource SmallTertiaryLabelStyle}"
+                       Margin="0, 10, 0, 0" />
+
+                <controls:CustomEntry Padding="10" BorderColor="#d3d3d3" BorderWidth="1" BorderRadius="8"  Text="{Binding PostCode, Mode=TwoWay}" />
+
+                <Label Text="{x:Static res:AppResources.Country}"
+                       Style="{StaticResource SmallTertiaryLabelStyle}"
+                       Margin="0, 10, 0, 0" />
+
+                <controls:CustomEntry Padding="10" BorderColor="#d3d3d3" BorderWidth="1" BorderRadius="8"  Text="{Binding Country, Mode=TwoWay}" />
+                <ContentView HeightRequest="90"/>
+
+            </StackLayout>
+
+        </ScrollView>
+
+        <pv:PancakeView Style="{StaticResource ButtonPanelStyle}"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression
+                                    Type=RelativeToParent, Property=Width, Factor=1}"
+                        RelativeLayout.YConstraint="{ConstraintExpression
+                            Type=RelativeToParent, Property=Height, Factor=1,Constant=-90}">
+
+            <pv:PancakeView.Shadow>
+                <pv:DropShadow />
+            </pv:PancakeView.Shadow>
+
+            <Button Style="{StaticResource PrimaryButtonStyle}"
+                    Text="{x:Static res:AppResources.Save}"
+                    Command="{Binding OkCommand}"
+                    HeightRequest="50"/>
+
+        </pv:PancakeView>
+
+    </RelativeLayout>-->
+    <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <StackLayout x:Name="PanelMain"  AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+
+            <StackLayout x:Name="mystacklayout" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            </StackLayout>
+            <pv:PancakeView Style="{StaticResource ButtonPanelStyle}"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression
+                                    Type=RelativeToParent, Property=Width, Factor=1}"
+                        RelativeLayout.YConstraint="{ConstraintExpression
+                            Type=RelativeToParent, Property=Height, Factor=1,Constant=-90}">
+
+                <pv:PancakeView.Shadow>
+                    <pv:DropShadow />
+                </pv:PancakeView.Shadow>
+
+                <Button Style="{StaticResource PrimaryButtonStyle}"
+                    Text="{Binding ButtonText}"
+                    Command="{Binding OkCommand}"
+                    HeightRequest="50"/>
+
+            </pv:PancakeView>
+            
+
+        </StackLayout>
+
+        <StackLayout x:Name="mycentremarker_layout" IsVisible="True" Padding="12"
+             AbsoluteLayout.LayoutFlags="PositionProportional"
+             AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1">
+
+        </StackLayout>
+
+        <BoxView x:Name="Filter"
+                     AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="All"
+                     BackgroundColor="#f3f3f3"
+                     IsVisible="{Binding IsBusy}"
+                     Opacity="0.90" />
+        <ActivityIndicator  IsRunning="True"
+                            VerticalOptions="CenterAndExpand"
+                            IsVisible="{Binding IsBusy}"
+                            HorizontalOptions="CenterAndExpand"
+                             AbsoluteLayout.LayoutBounds="0.5,0.5,0.5,0.5"
+                                        AbsoluteLayout.LayoutFlags="All"/>
+        <ImageButton
+                    IsVisible="{Binding IsMapsVisible}"
+                    Source="{Binding MapImage}"
+                    Clicked="ImageButton_Clicked"
+                    BackgroundColor="Transparent"
+                    HeightRequest="50"
+                    AbsoluteLayout.LayoutBounds="0.97,0.68,0.12,0.1"
+                    AbsoluteLayout.LayoutFlags="All"/>
+    </AbsoluteLayout>
+</ContentPage>

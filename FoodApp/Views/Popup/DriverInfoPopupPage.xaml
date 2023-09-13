@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage  xmlns:pages="http://rotorgames.com"
+                  xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+                  xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
+                  xmlns:controls="clr-namespace:FoodApp.Controls" 
+                  xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+                    xmlns:md="clr-namespace:FoodApp.MaterialDesign"
+                  x:Class="FoodApp.Views.Popup.DriverInfoPopupPage">
+    <pages:PopupPage.Animation>
+        <pages:MoveAnimation DurationIn="400"
+                                  DurationOut="300"
+                                  EasingIn="SpringOut"
+                                  EasingOut="SpringIn"
+                                  HasBackgroundAnimation="True"
+                                  PositionIn="Bottom"
+                                  PositionOut="Bottom"/>
+    </pages:PopupPage.Animation>
+    <StackLayout VerticalOptions="Center"  HorizontalOptions="CenterAndExpand" Padding="26,0" >
+        <Frame x:Name="ReviewTopSection" BackgroundColor="White" CornerRadius="10" HasShadow="False" >
+            <StackLayout Padding="10,20"
+            BackgroundColor="White"
+             HorizontalOptions="FillAndExpand"
+             VerticalOptions="Start">
+                <Grid HorizontalOptions="FillAndExpand">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80*"/>
+                        <ColumnDefinition Width="20*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" Style="{StaticResource BoldTitlePrimaryLabelStyle}" Text="" VerticalOptions="Center"/>
+
+                    <abstractions:TintedImage
+                    VerticalOptions="Center"
+                    HorizontalOptions="End"
+                    Grid.Column="1"
+                     BackgroundColor="Transparent">
+
+                        <abstractions:TintedImage.Source>
+
+                            <FontImageSource Glyph="{x:Static md:Icons.Close}"
+                                 FontFamily="Material"
+                                 Color="WhiteSmoke"
+                                 Size="30" />
+
+                        </abstractions:TintedImage.Source>
+                        <abstractions:TintedImage.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                    Command="{Binding CloseCommand}"
+                    CommandParameter="{Binding .}" />
+                        </abstractions:TintedImage.GestureRecognizers>
+                    </abstractions:TintedImage>
+                </Grid>
+                <Grid VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="100">
+                    <Frame CornerRadius="50" WidthRequest="80" HasShadow="False" Padding="0">
+                        <forms:CachedImage Source="{Binding ImageFile}" Aspect="AspectFill" HeightRequest="100" WidthRequest="100" >
+                            <forms:CachedImage.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding UploadImage}"/>
+                            </forms:CachedImage.GestureRecognizers>
+                        </forms:CachedImage>
+                    </Frame>
+                </Grid>
+                <Label Text="Name"
+Style="{StaticResource SmallTertiaryLabelStyle}" />
+                <controls:CustomEntry IsReadOnly="True" BorderColor="#d3d3d3"  Padding="10" BorderRadius="5" ReturnType="Next" Text="{Binding FullName, Mode=TwoWay}" >
+                </controls:CustomEntry>
+                <Label Text="Contact No"
+Style="{StaticResource SmallTertiaryLabelStyle}" />
+                <controls:CustomEntry IsReadOnly="True" BorderColor="#d3d3d3"  Padding="10" BorderRadius="5" Placeholder="" ReturnType="Next" Text="{Binding ContactNo, Mode=TwoWay}" >
+                </controls:CustomEntry>
+
+                <Label Text="Car Description"
+    Style="{StaticResource SmallTertiaryLabelStyle}" />
+                <controls:CustomEntry IsReadOnly="True" BorderColor="#d3d3d3"  Padding="10" BorderRadius="5" ReturnType="Next" Text="{Binding CarDescription, Mode=TwoWay}" >
+                </controls:CustomEntry>
+
+                <Label Text="Car Registration"
+    Style="{StaticResource SmallTertiaryLabelStyle}" />
+                <controls:CustomEntry IsReadOnly="True" BorderColor="#d3d3d3"  Padding="10" BorderRadius="5" ReturnType="Next" Text="{Binding CarRegistration, Mode=TwoWay}" >
+                </controls:CustomEntry>
+                <forms:CachedImage Source="{Binding CarImageFile}" Aspect="AspectFit" BackgroundColor="#f3f3f3" HorizontalOptions="FillAndExpand" HeightRequest="180" >
+                </forms:CachedImage>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</pages:PopupPage>

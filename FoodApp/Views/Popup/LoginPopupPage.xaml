@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage  xmlns:pages="http://rotorgames.com" xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup" xmlns:local="clr-namespace:FoodApp.CustomViews"
+                  x:Class="FoodApp.Views.Popup.LoginPopupPage">
+    <pages:PopupPage.Animation>
+        <pages:MoveAnimation
+            PositionIn="Bottom"
+            PositionOut="Bottom"
+            DurationIn="400"
+            DurationOut="300"
+            HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+    <AbsoluteLayout VerticalOptions="End"
+                 HorizontalOptions="CenterAndExpand"
+                 Padding="0,0"
+                 Background="Transparent">
+        <Frame x:Name="ReviewTopSection"
+               BackgroundColor="White"
+               CornerRadius="10"
+               HasShadow="False">
+            <Grid Padding="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Text="Sign up or log in" TextColor="#000" FontSize="20" VerticalTextAlignment="Center" FontAttributes="Bold" Grid.Row="0"/>
+                <!--<Button Text="Continue with Facebook" Command="{Binding ContinueWithFacebook}" CornerRadius="8"  TextColor="White" Background="#29c8d6" Grid.Row="1"/>-->
+                <local:FacebookLoginButton Grid.Row="1"
+            OnSuccess="{Binding OnFacebookLoginSuccessCmd}"
+            OnError="{Binding OnFacebookLoginErrorCmd}"
+            OnCancel="{Binding OnFacebookLoginCancelCmd}" />
+                <!--<Button Text="FB Logout" Command="{Binding FacebookLogoutCmd}" />-->
+                <Button Text="Continue with Google" Command="{Binding ContinueWithGoogle}" CornerRadius="8"  TextColor="#808080" Background="White" BorderColor="#808080" BorderWidth="1" Grid.Row="2"/>
+                <BoxView HeightRequest="1" BackgroundColor="#d3d3d3" Grid.Row="3"/>
+                <Button Text="Login" Command="{Binding ContinueWithLogin}" CornerRadius="8"  TextColor="#29c8d6" Background="White" BorderColor="#29c8d6" BorderWidth="1" Grid.Row="4"/>
+                <Label Text="By clicking Sign Up you are in agreement of the Terms and Conditions." Grid.Row="5"/>
+
+            </Grid>
+        </Frame>
+        <BoxView x:Name="Filter"
+                     AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="All"
+                     BackgroundColor="#d3d3d3"
+                     IsVisible="{Binding IsBusyLoginIndicator}"
+                     Opacity="0.60" />
+        <ActivityIndicator  IsRunning="True"
+                            VerticalOptions="CenterAndExpand"
+                            IsVisible="{Binding IsBusyLoginIndicator}"
+                            HorizontalOptions="CenterAndExpand"
+                             AbsoluteLayout.LayoutBounds="0.5,0.5,0.5,0.5"
+                                        AbsoluteLayout.LayoutFlags="All"/>
+    </AbsoluteLayout>
+</pages:PopupPage>

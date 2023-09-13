@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView 
+             x:Class="FoodApp.CustomViews.RewardsHistoryList"
+            xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FoodApp.ViewModels"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:md="clr-namespace:FoodApp.MaterialDesign"
+             xmlns:res="clr-namespace:FoodApp.Resources">
+    <ContentView.Content>
+        <pv:PancakeView CornerRadius="20,20,20,20"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource CardColorLight},
+                                                    Dark={StaticResource CardColorDark}}" Margin="5" Padding="5">
+            <Grid ColumnDefinitions=".30*, .50*, .20*"
+                                    RowDefinitions="40" >
+
+                <!--<Label Grid.RowSpan="3"
+                                       Text="{Binding Status, Converter={StaticResource OrderStatusIconConverter}}"
+                                       TextColor="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                                            Dark={StaticResource PrimaryColorDark}}"
+                                       FontFamily="Material"
+                                       FontSize="30"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center" />-->
+
+                <Label Grid.Column="0"
+                                      VerticalTextAlignment="Center"
+                                        HorizontalTextAlignment="Center"
+                                       Style="{StaticResource SmallSecondaryLabelStyle}"
+                                       LineBreakMode="TailTruncation">
+
+                    <Label.FormattedText>
+
+                        <FormattedString>
+                            <Span Text="REF-000" TextColor="{StaticResource PrimaryTextColorLight}"/>
+                            <Span Text="{Binding Id}" TextColor="{StaticResource PrimaryTextColorLight}"/>
+                        </FormattedString>
+
+                    </Label.FormattedText>
+
+                </Label>
+                <Label Grid.Column="1"
+                                      VerticalTextAlignment="Center"
+                                        HorizontalTextAlignment="Center"
+                                       Style="{StaticResource SmallLabelStyle}"
+                                        MaxLines="1"
+                                       LineBreakMode="TailTruncation">
+
+                    <Label.FormattedText>
+
+                        <FormattedString>
+
+                            <Span Text=" " TextColor="{StaticResource PrimaryColorDark}"/>
+                            <Span Text="{Binding ActionType}" TextColor="{StaticResource SecondaryTextColorLight}"/>
+
+                        </FormattedString>
+
+                    </Label.FormattedText>
+
+                </Label>
+
+
+                <Label Grid.Column="2"
+                       Grid.RowSpan="2"
+                                       FontSize="Small"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Center" TextColor="{Binding TextColor}">
+                    <Label.FormattedText>
+
+                        <FormattedString>
+
+                            <Span Text="+$" TextColor="{StaticResource PrimaryColorDark}"/>
+                            <Span Text="{Binding AddedBalance}" TextColor="{StaticResource PrimaryColorDark}"/>
+
+                        </FormattedString>
+
+                    </Label.FormattedText>
+                </Label>
+
+                <!--<Grid.GestureRecognizers>
+
+                    <TapGestureRecognizer 
+                                        NumberOfTapsRequired="1"
+                                        Command="{Binding Source={RelativeSource
+                                                            AncestorType={x:Type vm:WalletHistoryViewModel}},
+                                                            Path=ViewOrder}"
+                                        CommandParameter="{Binding .}"/>
+
+                </Grid.GestureRecognizers>-->
+
+            </Grid>
+
+        </pv:PancakeView>
+    </ContentView.Content>
+</ContentView>

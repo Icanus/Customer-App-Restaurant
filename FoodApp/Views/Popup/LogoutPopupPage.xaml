@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage  xmlns:pages="http://rotorgames.com" xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FoodApp.Views.Popup.LogoutPopupPage">
+    <pages:PopupPage.Animation>
+        <pages:MoveAnimation DurationIn="400"
+                                  DurationOut="300"
+                                  EasingIn="SpringOut"
+                                  EasingOut="SpringIn"
+                                  HasBackgroundAnimation="True"
+                                  PositionIn="Bottom"
+                                  PositionOut="Bottom"
+                                  />
+    </pages:PopupPage.Animation>
+
+    <StackLayout VerticalOptions="Center"  HorizontalOptions="CenterAndExpand" Padding="26,0" >
+        <Frame x:Name="ReviewTopSection" BackgroundColor="White" CornerRadius="10" HasShadow="False" >
+            <StackLayout BackgroundColor="White"
+                         HorizontalOptions="FillAndExpand"
+                         Padding="10,20"
+                         VerticalOptions="Start">
+                <StackLayout HorizontalOptions="FillAndExpand">
+                    <Label LineBreakMode="NoWrap"  x:Name="ConfirmationTitle" 
+                           FontAttributes="Bold" 
+                           FontSize="20" 
+                           HorizontalOptions="Center" 
+                           HorizontalTextAlignment="Center" 
+                           TextColor="#000" 
+                           VerticalOptions="Center"/>
+                </StackLayout>
+
+                <StackLayout x:Name="ConfirmationContent" HorizontalOptions="FillAndExpand" Padding="0,10,0,20">
+                    <Label LineBreakMode="NoWrap"  x:Name="ConfirmationContentLabel" 
+                           HorizontalOptions="Center" 
+                           HorizontalTextAlignment="Center" 
+                           Text="Are you sure you want to log out?"
+                           TextColor="#606060" 
+                           VerticalOptions="Center"/>
+                </StackLayout>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Frame x:Name="CancelButton" Grid.Column="0" BackgroundColor="#D3D1D1" CornerRadius="5" HasShadow="False" Padding="5, 15">
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                            <Label LineBreakMode="NoWrap" FontSize="18" HorizontalOptions="Center" Text="CANCEL" TextColor="White" VerticalOptions="Center"/>
+                            <!--<control:TintedImage IsOpaque="true" Source="pencil" WidthRequest="10" HeightRequest="10" TintColor="White"/>-->
+                        </StackLayout>
+                    </Frame>
+                    <Frame x:Name="LogoutButton" Grid.Column="1" 
+						BackgroundColor="{StaticResource colorAccent}" CornerRadius="5" HasShadow="False" Padding="5, 15">
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                            <Label LineBreakMode="NoWrap" FontSize="18" HorizontalOptions="Center" Text="LOG OUT" TextColor="White" VerticalOptions="Center"/>
+                            <!--<control:TintedImage IsOpaque="true" Source="checkmark" WidthRequest="10" HeightRequest="10" TintColor="White"/>-->
+                        </StackLayout>
+                    </Frame>
+                </Grid>
+
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</pages:PopupPage>

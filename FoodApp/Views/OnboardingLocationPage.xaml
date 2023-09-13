@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<controls:BaseContentPage  xmlns:controls="clr-namespace:FoodApp.Controls" xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FoodApp.Views.OnboardingLocationPage"
+            xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions">
+    <ContentPage.Content>
+        <AbsoluteLayout x:Name="PageLayout">
+            <StackLayout>
+                <StackLayout 
+            Padding="20,0"
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All" HorizontalOptions="FillAndExpand">
+                    <RelativeLayout x:Name="LoginPageLayout" HorizontalOptions="FillAndExpand">
+                        <StackLayout x:Name="NavigationPadding">
+                            <StackLayout.BackgroundColor>
+                                <OnPlatform
+                                x:TypeArguments="Color"
+                                Android="White"
+                                iOS="White" />
+                            </StackLayout.BackgroundColor>
+                        </StackLayout>
+
+                        <StackLayout
+                        HorizontalOptions="FillAndExpand"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,
+                                                                              Property=Width,
+                                                                              Factor=1}"
+                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
+                                                                          Property=Y,
+                                                                          Factor=1,
+                                                                          Constant=150}"
+                        Spacing="0">
+                            <ffimageloading:CachedImage
+                            HeightRequest="100"
+                            HorizontalOptions="Center"
+                            IsOpaque="true"
+                            Source="mylocation"
+                            WidthRequest="250" />
+                        </StackLayout>
+                    </RelativeLayout>
+
+                </StackLayout>
+                <StackLayout
+                Padding="0"
+                HorizontalOptions="FillAndExpand"
+                Spacing="0">
+                    <StackLayout
+                    HorizontalOptions="Center"
+                    Orientation="Horizontal"
+                    Spacing="2">
+                        <Label
+                        FontSize="15"
+                        HorizontalTextAlignment="Center"
+                        IsVisible="true"
+                        FontAttributes="Bold"
+                        TextColor="#000"
+                        LineBreakMode="NoWrap"
+                        Text="Find restaurants and shops near you!"
+                        VerticalOptions="EndAndExpand"
+                        VerticalTextAlignment="End" />
+                    </StackLayout>
+                    <StackLayout
+                    Padding="30,5"
+                    HorizontalOptions="FillAndExpand"
+                    Spacing="0">
+                        <Label
+                        FontSize="13"
+                        HorizontalOptions="FillAndExpand"
+                        HorizontalTextAlignment="Center"
+                        IsVisible="True"
+                        Text="By allowing location access, you can search for restaurants and shops near you and received more accurate delivery."
+                        TextColor="#606060"
+                        VerticalTextAlignment="End" />
+                    </StackLayout>
+
+                </StackLayout>
+            </StackLayout>
+            <StackLayout
+                BackgroundColor="#d3d3d3"
+                AbsoluteLayout.LayoutBounds="0, 1, 1, 0.19"
+                AbsoluteLayout.LayoutFlags="All" >
+                <Button BackgroundColor="#29c8d6" Command="{Binding PinLocation}" TextColor="#ffff" Text="Share my current location." Margin="10,5,10,0"/>
+                <Button Text="Enter address manually" Command="{Binding PinLocation}" TextColor="#29c8d6" BackgroundColor="#d3d3d3" BorderColor="#29c8d6" BorderWidth="1" Margin="10,5,10,0"/>
+            </StackLayout>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</controls:BaseContentPage>

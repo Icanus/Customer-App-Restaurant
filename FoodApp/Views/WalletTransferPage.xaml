@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:res="clr-namespace:FoodApp.Resources"
+             xmlns:md="clr-namespace:FoodApp.MaterialDesign" xmlns:controls="clr-namespace:FoodApp.Controls" 
+             xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions" 
+             xmlns:vm="clr-namespace:FoodApp.ViewModels" xmlns:xct="clr-namespace:FoodApp.Behaviors" xmlns:xct1="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="FoodApp.Views.WalletTransferPage" Title="Transfer Points">
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <RelativeLayout>
+                <ScrollView RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,
+                        Property=Width, Factor=1}"
+                    RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,
+                        Property=Height, Factor=1}">
+                    <StackLayout>
+                        <StackLayout Padding="30,150,30,30" Spacing="10">
+
+                            <Label Text="{x:Static res:AppResources.EmailRequired}"
+                       Style="{StaticResource SmallPrimaryLabelStyle}" />
+
+                            <controls:CustomEntry BorderColor="#d3d3d3" Padding="10" Placeholder="Enter Email" Text="{Binding Email, Mode=TwoWay}">
+                                <controls:CustomEntry.Behaviors>
+                                    <xct1:EmailValidationBehavior
+                                    x:Name="EmailValidator"
+                                    DecorationFlags="Trim"
+                                    InvalidStyle="{StaticResource InvalidEntryStyle}"/>
+                                </controls:CustomEntry.Behaviors>
+                            </controls:CustomEntry>
+
+                            <Label Text="Amount*"
+                       Style="{StaticResource SmallPrimaryLabelStyle}"
+                       Margin="0, 10, 0, 0" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <controls:CustomEntry BorderColor="{Binding AmountBorderColor}"  Grid.Row="0"
+                                   x:Name="AmountEntry"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="2" Padding="10" Text="{Binding Amount}" TextColor="{Binding AmountColor}" Placeholder="Enter Amount" Keyboard="Numeric">
+                                    <controls:CustomEntry.Behaviors>
+                                        <xct:EventToCommandBehavior
+                                    EventName="TextChanged"
+                                    Command="{Binding AmountTextChanged}" />
+                                    </controls:CustomEntry.Behaviors>
+                                </controls:CustomEntry>
+                                <Label Text="Should be less than equal to transferrable amount."
+                                       Grid.ColumnSpan="2"
+                                       IsVisible="{Binding IsAmountError}"
+                                       TextColor="Red"
+                                       Grid.Row="1"
+                                       VerticalTextAlignment="Start"
+                       Style="{StaticResource SmallPrimaryLabelStyle}"
+                       Margin="0, 10, 0, 0" />
+                            </Grid>
+            
+
+
+                            <ContentView HeightRequest="134"/>
+
+                        </StackLayout>
+
+                    </StackLayout>
+                </ScrollView>
+
+                <pv:PancakeView Style="{StaticResource ButtonPanelStyle}"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression
+                            Type=RelativeToParent, Property=Width, Factor=1}"
+                        RelativeLayout.YConstraint="{ConstraintExpression
+                            Type=RelativeToParent, Property=Height, Factor=1,
+                            Constant=-134}">
+
+                    <pv:PancakeView.Shadow>
+                        <pv:DropShadow />
+                    </pv:PancakeView.Shadow>
+
+                    <StackLayout Spacing="20">
+
+                        <Label Style="{StaticResource MediumSecondaryLabelStyle}"
+                       HorizontalTextAlignment="Center"
+                       HorizontalOptions="FillAndExpand"
+                       HeightRequest="24">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Transferrable: "/>
+                                    <Span Text="{Binding Balance}"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        
+                        </Label>
+
+                        <Button Style="{StaticResource PrimaryButtonStyle}"
+                        Text="Transfer"
+                        Command="{Binding OkCommand}"
+                        HeightRequest="50"/>
+
+                    </StackLayout>
+
+                </pv:PancakeView>
+            </RelativeLayout>
+            <BoxView x:Name="Filter"
+                     AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="All"
+                     BackgroundColor="Transparent"
+                     IsVisible="{Binding IsBusy}"
+                     Opacity="1" />
+            <ActivityIndicator  IsRunning="True"
+                            VerticalOptions="CenterAndExpand"
+                            HorizontalOptions="CenterAndExpand"
+                             AbsoluteLayout.LayoutBounds="0.5,0.5,0.5,0.5"
+                             IsVisible="{Binding IsBusy}"
+                                        AbsoluteLayout.LayoutFlags="All"/>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage  xmlns:pages="http://rotorgames.com"
+                  xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FoodApp.Views.Popup.InfoPopupPage">
+    <pages:PopupPage.Animation>
+        <pages:MoveAnimation DurationIn="400"
+                                  DurationOut="300"
+                                  EasingIn="SpringOut"
+                                  EasingOut="SpringIn"
+                                  HasBackgroundAnimation="True"
+                                  PositionIn="Bottom"
+                                  PositionOut="Bottom"/>
+    </pages:PopupPage.Animation>
+
+    <StackLayout VerticalOptions="Center"  HorizontalOptions="CenterAndExpand" Padding="26,0" >
+        <Frame x:Name="ReviewTopSection" BackgroundColor="White" CornerRadius="10" HasShadow="False" >
+            <StackLayout Padding="10,20"
+                        BackgroundColor="White"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="Start">
+                <StackLayout HorizontalOptions="FillAndExpand">
+                    <Label  x:Name="ConfirmationTitle" FontAttributes="Bold" FontSize="20" HorizontalOptions="Center" TextColor="#000" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+                </StackLayout>
+
+                <StackLayout x:Name="ConfirmationContent" Padding="0,10,0,20" HorizontalOptions="FillAndExpand">
+
+                </StackLayout>
+
+                <Button 
+                        IsVisible="False"
+                        x:Name="ConfirmationButton"
+                        Text="OKAY" 
+						TextColor="White" 
+						FontSize="16" 
+						Padding="45, 7" 
+						HorizontalOptions="Center" 
+						CornerRadius="5" 
+						BackgroundColor="{StaticResource colorAccent}"
+						/>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</pages:PopupPage>

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:md="clr-namespace:FoodApp.MaterialDesign"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:res="clr-namespace:FoodApp.Resources"
+             xmlns:template="clr-namespace:FoodApp.ControlTemplates"
+             ios:Page.UseSafeArea="true"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="FoodApp.Views.CheckoutCompletedPage"
+             BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},
+                Light={StaticResource BackgroundColorLight}}">
+
+    <Grid RowDefinitions="Auto, *, Auto"
+          Padding="30">
+
+        <ContentView />
+
+        <StackLayout Grid.Row="1"
+                     Spacing="10"
+                     VerticalOptions="Center">
+
+            <Label Text="{x:Static res:AppResources.Congratulations}"
+                   Style="{StaticResource TitlePrimaryLabelStyle}"
+                   HorizontalTextAlignment="Center" />
+
+            <Label Text="{x:Static res:AppResources.YourOrderReceived}"
+                   Style="{StaticResource MediumTertiaryLabelStyle}"
+                   HorizontalTextAlignment="Center" />
+
+            <template:Badge BadgeIcon="{x:Static md:Icons.CheckCircleOutline}"
+                            ControlTemplate="{StaticResource BadgeControlTemplate}"/>
+
+        </StackLayout>
+
+        <StackLayout Grid.Row="2"
+                     VerticalOptions="End">
+
+            <Button Style="{StaticResource PrimaryButtonStyle}"
+                    Text="{x:Static res:AppResources.Continue}"
+                    Clicked="OnContinueTapped" />
+
+        </StackLayout>
+
+    </Grid>
+
+</ContentPage>

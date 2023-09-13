@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FoodApp.Views.FeedbackPage"
+            xmlns:md="clr-namespace:FoodApp.MaterialDesign"
+            xmlns:res="clr-namespace:FoodApp.Resources" 
+            xmlns:vm="clr-namespace:FoodApp.ViewModels"
+             xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
+             xmlns:controls="clr-namespace:FoodApp.Controls">
+    <ContentPage.Content>
+        <RelativeLayout>
+            <StackLayout Spacing="10"
+                      RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,
+                        Property=Width, Factor=1}"
+                      RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,
+                        Property=Height, Factor=1}">
+                <pv:PancakeView CornerRadius="0, 0, 20, 20">
+
+                    <RelativeLayout>
+
+                        <Grid RowDefinitions="90,*,90"
+                            ColumnDefinitions="90,*,90"
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,
+                            Property=Width, Factor=1}"
+                            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,
+                            Property=Width, Factor=0.8}">
+
+                            <Image Source="mi_mexican_salad"
+                               Aspect="AspectFill"
+                               Grid.RowSpan="3"
+                               Grid.ColumnSpan="3"/>
+
+                        </Grid>
+
+                    </RelativeLayout>
+
+                </pv:PancakeView>
+                <Label Text="Rate Your Order"
+                    HorizontalOptions="Center"
+                    Style="{StaticResource BoldTitlePrimaryLabelStyle}"
+                    Margin="15, 0, 15, 0" />
+                <Grid Padding="15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button  Text="{x:Static md:Icons.Star}"
+                Grid.Column="0"
+                TextColor="{Binding StarColor1}"
+                FontFamily="Material"
+                FontSize="30"
+                VerticalOptions="CenterAndExpand" 
+                BackgroundColor="Transparent"
+                Command="{Binding TappedStarCommand}"
+                CommandParameter="1"
+                HorizontalOptions="CenterAndExpand" >
+                </Button>
+
+                    <Label Text="{x:Static md:Icons.Star}"
+                Grid.Column="1"
+                FontFamily="Material"
+                TextColor="{Binding StarColor2}"
+                FontSize="30"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" >
+                        <Label.GestureRecognizers>
+
+                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                         Command="{Binding TappedStarCommand}"
+                                                          CommandParameter="2" />
+
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                    <Label  Text="{x:Static md:Icons.Star}"
+                Grid.Column="2"
+                TextColor="{Binding StarColor3}"
+                FontFamily="Material"
+                FontSize="30"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" >
+                        <Label.GestureRecognizers>
+
+                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                         Command="{Binding Source={RelativeSource
+                                                        AncestorType={x:Type vm:FeedbackViewModel}},
+                                                        Path=TappedStarCommand}"
+                                                          CommandParameter="3" />
+
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                    <Label  Text="{x:Static md:Icons.Star}"
+                Grid.Column="3"
+                TextColor="{Binding StarColor4}"
+                FontFamily="Material"
+                FontSize="30"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" >
+                        <Label.GestureRecognizers>
+
+                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                         Command="{Binding Source={RelativeSource
+                                                        AncestorType={x:Type vm:FeedbackViewModel}},
+                                                        Path=TappedStarCommand}"
+                                                          CommandParameter="4" />
+
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                    <Label  Text="{x:Static md:Icons.Star}"
+                Grid.Column="4"
+                TextColor="{Binding StarColor5}"
+                FontFamily="Material"
+                FontSize="30"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" >
+                        <Label.GestureRecognizers>
+
+                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                         Command="{Binding Source={RelativeSource
+                                                        AncestorType={x:Type vm:FeedbackViewModel}},
+                                                        Path=TappedStarCommand}"
+                                                          CommandParameter="5" />
+
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+                <Frame BorderColor="#d3d3d3" CornerRadius="8" Padding="10" Margin="10,5,10,120" VerticalOptions="FillAndExpand">
+                    <controls:BorderlessEditor Text="{Binding Comment}" IsReadOnly="{Binding IsReadOnly}" Placeholder="Comments" VerticalOptions="FillAndExpand" MaxLength="100" />
+                </Frame>
+            </StackLayout>
+            <pv:PancakeView Style="{StaticResource ButtonPanelStyle}"
+                        IsVisible="{Binding HasNoFeedback}"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression
+                                    Type=RelativeToParent, Property=Width, Factor=1}"
+                        RelativeLayout.YConstraint="{ConstraintExpression
+                            Type=RelativeToParent, Property=Height, Factor=1,Constant=-90}">
+
+                <pv:PancakeView.Shadow>
+                    <pv:DropShadow />
+                </pv:PancakeView.Shadow>
+
+                <Button Style="{StaticResource PrimaryButtonStyle}"
+                    Text="{x:Static res:AppResources.SubmitFeedback}"
+                    Command="{Binding OkCommand}"
+                    HeightRequest="50"/>
+
+            </pv:PancakeView>
+        </RelativeLayout>
+    </ContentPage.Content>
+</ContentPage>

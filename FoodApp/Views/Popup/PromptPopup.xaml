@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage  xmlns:pages="http://rotorgames.com"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:controls="clr-namespace:FoodApp.Controls" xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             x:Class="FoodApp.Views.Popup.PromptPopup"
+             xmlns:res="clr-namespace:FoodApp.Resources">
+    <pages:PopupPage.Animation>
+        <pages:MoveAnimation DurationIn="400"
+                                  DurationOut="300"
+                                  EasingIn="SpringOut"
+                                  EasingOut="SpringIn"
+                                  HasBackgroundAnimation="True"
+                                  PositionIn="Bottom"
+                                  PositionOut="Bottom"/>
+    </pages:PopupPage.Animation>
+
+    <StackLayout VerticalOptions="Center"  HorizontalOptions="CenterAndExpand" Padding="26,0" >
+        <Frame x:Name="ReviewTopSection" BackgroundColor="White" CornerRadius="10" HasShadow="False" >
+            <StackLayout Padding="10,20"
+                        BackgroundColor="White"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="Start">
+                <StackLayout HorizontalOptions="FillAndExpand">
+                    <Label  x:Name="ConfirmationTitle" Text="Contact Info" FontAttributes="Bold" FontSize="20" HorizontalOptions="Center" TextColor="#000" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout HorizontalOptions="FillAndExpand">
+                    <Label  x:Name="lblError" IsVisible="False" Text="Invalid contact info" HorizontalOptions="Center" TextColor="Red" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout x:Name="ConfirmationContent" Padding="0,10,0,20" HorizontalOptions="FillAndExpand">
+                    <StackLayout x:Name="EmailSL">
+                        <Label Text="Contact Number" x:Name="lblContactDetail"/>
+                        <controls:CustomEntry x:Name="entryContactDetail" WidthRequest="300" BorderRadius="5" Padding="10" BorderColor="#d3d3d3"/>
+                    </StackLayout>
+                    <StackLayout x:Name="MobileSL">
+                        <Label Text="{x:Static res:AppResources.PhoneRequired}"
+                       Style="{StaticResource SmallTertiaryLabelStyle}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Frame
+                            Grid.Column="0"
+                    CornerRadius="10"
+                    VerticalOptions="Center"
+                    HorizontalOptions="FillAndExpand"
+                    Padding="0"
+                    BorderColor="{StaticResource TertiaryTextColorDark}"
+                            BackgroundColor="Transparent"
+                    IsClippedToBounds="True">
+                                <StackLayout Orientation="Horizontal"
+                                 HorizontalOptions="FillAndExpand"
+                                 VerticalOptions="FillAndExpand">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ShowPopupCommand}"/>
+                                    </StackLayout.GestureRecognizers>
+                                    <forms:SvgCachedImage
+                            HeightRequest="26"
+                            Source="{Binding SelectedCountry.FlagUrl}"
+                            VerticalOptions="CenterAndExpand"
+                            WidthRequest="26" 
+                            Margin="20,10,0,10"/>
+                                    <Label Text="{Binding SelectedCountry.CountryCode, StringFormat='(+{0})'}"
+                               VerticalTextAlignment="Center"
+                               Margin="20,0"
+                               HorizontalTextAlignment="End"
+                               HorizontalOptions="EndAndExpand"
+                               VerticalOptions="CenterAndExpand"/>
+                                </StackLayout>
+                            </Frame>
+                            <controls:CustomEntry Grid.Column="1" x:Name="phoneEntry" BorderColor="{StaticResource TertiaryTextColorDark}"  Padding="10" BorderRadius="5" Placeholder="Enter Phone number" Keyboard="Numeric" ReturnType="Next" Text="{Binding Phone , Mode=TwoWay}" />
+                        </Grid>
+                    </StackLayout>
+                    <Label Text="Contact Name" x:Name="lblContactName"/>
+                    <controls:CustomEntry x:Name="entryContactName" WidthRequest="300" BorderRadius="5" Padding="10" BorderColor="#d3d3d3"/>
+                </StackLayout>
+
+                <Button 
+                        x:Name="ConfirmationButton"
+                        Text="SUBMIT" 
+						TextColor="White" 
+						FontSize="16" 
+						Padding="45, 7" 
+						HorizontalOptions="Center" 
+						CornerRadius="5" 
+						BackgroundColor="{StaticResource colorAccent}"
+						/>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</pages:PopupPage>

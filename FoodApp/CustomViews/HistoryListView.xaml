@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FoodApp.ViewModels"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:md="clr-namespace:FoodApp.MaterialDesign"
+             xmlns:res="clr-namespace:FoodApp.Resources"
+             x:Class="FoodApp.CustomViews.HistoryList">
+  <ContentView.Content>
+        <pv:PancakeView CornerRadius="20,20,20,20"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource CardColorLight},
+                                                    Dark={StaticResource CardColorDark}}" Margin="5" Padding="5">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+            <Grid ColumnDefinitions=".40*, .40*, .20*"
+                                    RowDefinitions="40" >
+
+                <!--<Label Grid.RowSpan="3"
+                                       Text="{Binding Status, Converter={StaticResource OrderStatusIconConverter}}"
+                                       TextColor="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                                            Dark={StaticResource PrimaryColorDark}}"
+                                       FontFamily="Material"
+                                       FontSize="30"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center" />-->
+
+                <Label Grid.Column="0"
+                                      VerticalTextAlignment="Center"
+                                        HorizontalTextAlignment="Center"
+                                        WidthRequest="120"
+                                       Style="{StaticResource SmallSecondaryLabelStyle}">
+
+                    <Label.FormattedText>
+
+                        <FormattedString>
+                            <Span Text="{Binding TRN}" TextColor="{StaticResource PrimaryTextColorLight}"/>
+                        </FormattedString>
+
+                    </Label.FormattedText>
+
+                </Label>
+                <Label Grid.Column="1"
+                                      VerticalTextAlignment="Center"
+                                        HorizontalTextAlignment="Center"
+                                       Style="{StaticResource SmallSecondaryLabelStyle}"
+                                        MaxLines="2"
+                                       LineBreakMode="TailTruncation">
+
+                    <Label.FormattedText>
+
+                        <FormattedString>
+
+                            <Span Text=" " TextColor="{StaticResource PrimaryColorDark}"/>
+                            <Span Text="{Binding Description}" TextColor="{StaticResource SecondaryTextColorLight}"/>
+
+                        </FormattedString>
+
+                    </Label.FormattedText>
+
+                </Label>
+                <Label Grid.Column="2"
+                       Grid.RowSpan="2"
+                                       Text="{Binding AddedBalance}"
+                                       FontSize="Small"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Center" TextColor="{Binding TextColor}"/>
+
+               
+                <Grid.GestureRecognizers>
+
+                    <TapGestureRecognizer 
+                                        NumberOfTapsRequired="1"
+                                        Command="{Binding Source={RelativeSource
+                                                            AncestorType={x:Type vm:WalletHistoryViewModel}},
+                                                            Path=ViewOrder}"
+                                        CommandParameter="{Binding .}"/>
+
+                </Grid.GestureRecognizers>
+
+                </Grid>
+                <pv:PancakeView CornerRadius="15, 15, 15, 15"
+                                                        WidthRequest="25"
+                                                        HeightRequest="25"
+                                                        BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                                                            Dark={StaticResource PrimaryColorDark}}"
+                                                        VerticalOptions="Center"
+                                                        HorizontalOptions="EndAndExpand">
+
+                    <Label Text="{x:Static md:Icons.Check}"
+                                                        IsVisible="{Binding IsSelected}"
+                                                   TextColor="WhiteSmoke"
+                                                   FontFamily="Material"
+                                                   FontSize="20"
+                                                   VerticalOptions="Center"
+                                                   HorizontalOptions="Center" />
+                </pv:PancakeView>
+
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                              Command="{Binding Source={RelativeSource
+                                                                AncestorType={x:Type vm:WalletHistoryViewModel}}, Path=AddedBalanceCommand}"
+                                                              CommandParameter="{Binding .}" />
+
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+        </pv:PancakeView>
+    </ContentView.Content>
+</ContentView>

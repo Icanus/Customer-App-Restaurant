@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<controls:PopUpBase  xmlns:pages="http://rotorgames.com"
+                  xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+                  xmlns:controls="clr-namespace:FoodApp.Controls"
+                  xmlns:res="clr-namespace:FoodApp.Resources" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:customviews="clr-namespace:FoodApp.CustomViews" xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+                     x:Class="FoodApp.Views.Popup.AddAddressPopupPage">
+    <pages:PopupPage.Animation>
+        <pages:MoveAnimation
+            PositionIn="Bottom"
+            PositionOut="Bottom"
+            DurationIn="400"
+            DurationOut="300"
+            HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+    <pv:PancakeView Style="{StaticResource ButtonPanelStyle}" 
+                 VerticalOptions="End"
+                  HorizontalOptions="FillAndExpand"
+                 Padding="0,0">
+
+        <pv:PancakeView.Shadow>
+            <pv:DropShadow />
+        </pv:PancakeView.Shadow>
+        <StackLayout 
+               BackgroundColor="White"
+                 Background="Transparent">
+            <ScrollView HorizontalOptions="FillAndExpand">
+                <StackLayout Padding="20" Spacing="5">
+                    <Label Text="{x:Static res:AppResources.LocationName}"
+                       Style="{StaticResource SmallTertiaryLabelStyle}" />
+
+                   <!-- <customviews:DropdownView/>-->
+                    <!--<controls:CustomEntry Padding="10" BorderColor="#d3d3d3" BorderWidth="1" ReturnType="Next" BorderRadius="8" Text="{Binding AddressTitle, Mode=TwoWay}" />-->
+                   
+
+                    <Frame Padding="5,0"
+                                   IsVisible="{Binding HasHousingBenefits}"
+                                   BackgroundColor="White"
+                                   BorderColor="#d3d3d3"
+                                   CornerRadius="5"
+                                   HasShadow="False"
+                                   HeightRequest="45">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80*"></ColumnDefinition>
+                                <ColumnDefinition Width="10*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Picker x:Name="Area"
+                                        FontAttributes="Bold"
+                                        FontSize="18"
+                                        Grid.Column="0"
+                                        HorizontalOptions="FillAndExpand"
+                                        ItemsSource="{Binding LocationList}"
+                                        ItemDisplayBinding="{Binding Name}"
+                                        SelectedItem="{Binding SelectedLocation}" />
+                            <StackLayout Grid.Column="1"
+                                                 Grid.Row="0"
+                                                 IsVisible="true"
+                                                 Rotation="0"
+                                                 HorizontalOptions="EndAndExpand">
+                                <abstractions:TintedImage Margin="10,12,10,10"
+                                                             HeightRequest="20"
+                                                             Source="arrow"
+                                                             TintColor="#606060" />
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding LocationTapped}" />
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+
+                    <Label Text="{x:Static res:AppResources.AddressLine1}"
+                       Style="{StaticResource SmallTertiaryLabelStyle}"
+                       Margin="0, 10, 0, 0" />
+
+                    <controls:CustomEntry Padding="10" BorderColor="#d3d3d3" BorderWidth="1"  ReturnType="Next" BorderRadius="8"  Text="{Binding Address1, Mode=TwoWay}" />
+                    
+                    <Label Text="{x:Static res:AppResources.City}"
+                       Style="{StaticResource SmallTertiaryLabelStyle}"
+                       Margin="0, 10, 0, 0" />
+
+                    <controls:CustomEntry Padding="10" BorderColor="#d3d3d3" BorderWidth="1"  ReturnType="Next" BorderRadius="8"  Text="{Binding City, Mode=TwoWay}" />
+
+                    <Label Text="{x:Static res:AppResources.State}"
+                       Style="{StaticResource SmallTertiaryLabelStyle}"
+                       Margin="0, 10, 0, 0" IsVisible="false" />
+
+                    <controls:CustomEntry Padding="10" BorderColor="#d3d3d3" BorderWidth="1"  ReturnType="Next" BorderRadius="8"  Text="{Binding State, Mode=TwoWay}" IsVisible="false" />
+
+                    <Label Text="{x:Static res:AppResources.PostCode}"
+                       Style="{StaticResource SmallTertiaryLabelStyle}"
+                       Margin="0, 10, 0, 0" IsVisible="false" />
+
+                    <controls:CustomEntry Padding="10" BorderColor="#d3d3d3" BorderWidth="1"  ReturnType="Next" BorderRadius="8"  Text="{Binding PostCode, Mode=TwoWay}" IsVisible="false" />
+
+                    <Label Text="{x:Static res:AppResources.Country}"
+                       Style="{StaticResource SmallTertiaryLabelStyle}"
+                       Margin="0, 10, 0, 0" IsVisible="false" />
+
+                    <Label Text="{x:Static res:AppResources.Comment}"
+                       Style="{StaticResource SmallTertiaryLabelStyle}"
+                       Margin="0, 10, 0, 0" />
+                    <Frame BorderColor="#d3d3d3" CornerRadius="8" Padding="10" VerticalOptions="FillAndExpand">
+                        <controls:BorderlessEditor Text="{Binding Comment}"  VerticalOptions="FillAndExpand" MaxLength="100" />
+                    </Frame>
+
+                    <controls:CustomEntry Padding="10" BorderColor="#d3d3d3" BorderWidth="1"  ReturnType="Go" BorderRadius="8"  Text="{Binding Country, Mode=TwoWay}" IsVisible="false" />
+                    <Button Margin="0,20,0,0" Style="{StaticResource PrimaryButtonStyle}"
+                    Text="{x:Static res:AppResources.Save}"
+                    Command="{Binding OkCommand}"
+                    HeightRequest="50"/>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </pv:PancakeView>
+</controls:PopUpBase>

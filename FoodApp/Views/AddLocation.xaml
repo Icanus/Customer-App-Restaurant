@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FoodApp.Views.AddLocation"
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps">
+    <!-- xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"-->
+    <ContentPage.Content>
+        <StackLayout Margin="10">
+            <maps:Map x:Name="map">
+                <x:Arguments>
+                    <maps:MapSpan>
+                        <x:Arguments>
+                            <maps:Position>
+                                <x:Arguments>
+                                    <x:Double>36.9628066</x:Double>
+                                    <x:Double>-122.0194722</x:Double>
+                                </x:Arguments>
+                            </maps:Position>
+                            <x:Double>0.01</x:Double>
+                            <x:Double>0.01</x:Double>
+                        </x:Arguments>
+                    </maps:MapSpan>
+                </x:Arguments>
+                <maps:Map.Pins>
+                    <maps:Pin Label="Santa Cruz"
+                          Address="The city with a boardwalk"
+                          Type="Place">
+                        <maps:Pin.Position>
+                            <maps:Position>
+                                <x:Arguments>
+                                    <x:Double>36.9628066</x:Double>
+                                    <x:Double>-122.0194722</x:Double>
+                                </x:Arguments>
+                            </maps:Position>
+                        </maps:Pin.Position>
+                    </maps:Pin>
+                </maps:Map.Pins>
+            </maps:Map>
+            <Entry TextColor="#000" Text="{Binding Address}" BackgroundColor="#fff" Placeholder="Address" Margin="10,5,10,0"/>
+            <Button Text="Confirm" Command="{Binding AddLocation}" TextColor="#fff" BackgroundColor="#29c8d6" Margin="10,5,10,0"/>
+        </StackLayout>
+        <!--<AbsoluteLayout>
+            <StackLayout
+                    AbsoluteLayout.LayoutFlags="All"
+                AbsoluteLayout.LayoutBounds="0.5, 0.5, 0.5, 0.5"
+                HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                <Label Text="Google Maps" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+            </StackLayout>
+            <StackLayout
+                    BackgroundColor="#d3d3d3"
+                    AbsoluteLayout.LayoutBounds="0, 1, 1, 0.19"
+                    AbsoluteLayout.LayoutFlags="All" >
+                <Entry TextColor="#000" Text="{Binding Address}" BackgroundColor="#fff" Placeholder="Address" Margin="10,5,10,0"/>
+                <Button Text="Confirm" Command="{Binding AddLocation}" TextColor="#fff" BackgroundColor="#29c8d6" Margin="10,5,10,0"/>
+            </StackLayout>
+        </AbsoluteLayout>-->
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FoodApp.Views.LoginPage"
+             xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:res="clr-namespace:FoodApp.Resources"
+             xmlns:md="clr-namespace:FoodApp.MaterialDesign" xmlns:controls="clr-namespace:FoodApp.Controls" 
+             xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions" 
+             xmlns:vm="clr-namespace:FoodApp.ViewModels" xmlns:xct="clr-namespace:FoodApp.Behaviors"
+             NavigationPage.HasNavigationBar="False"
+             Background="{StaticResource BackgroundColorLight}">
+    <AbsoluteLayout>
+        <RelativeLayout>
+            <ScrollView RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,
+                        Property=Width, Factor=1}"
+                    RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,
+                        Property=Height, Factor=1}">
+                <StackLayout>
+                    <abstractions:TintedImage
+                                    Margin="30"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="End"
+                                        Grid.Column="1"
+                                        BackgroundColor="Transparent">
+
+                        <abstractions:TintedImage.Source>
+
+                            <FontImageSource Glyph="{x:Static md:Icons.Close}"
+                                                         FontFamily="Material"
+                                                         Color="WhiteSmoke"
+                                                         Size="30" />
+
+                        </abstractions:TintedImage.Source>
+                        <abstractions:TintedImage.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CloseCommand}"/>
+                        </abstractions:TintedImage.GestureRecognizers>
+                    </abstractions:TintedImage>
+                    <StackLayout Padding="30,100,30,30" Spacing="10">
+
+                        <Label Style="{StaticResource BoldTitlePrimaryLabelStyle}" Text="Login"/>
+                        <Label Text="{x:Static res:AppResources.Email}"
+                       Style="{StaticResource SmallPrimaryLabelStyle}" />
+
+                        <controls:CustomEntry BorderColor="#d3d3d3" Padding="10" Placeholder="Enter Email" Text="{Binding Email, Mode=TwoWay}">
+                            <controls:CustomEntry.Behaviors>
+                                <xct:EventToCommandBehavior
+                                    EventName="TextChanged"
+                                    Command="{Binding UsernameTextChanged}" />
+                            </controls:CustomEntry.Behaviors>
+                        </controls:CustomEntry>
+
+                        <Label Text="{x:Static res:AppResources.Password}"
+                       Style="{StaticResource SmallPrimaryLabelStyle}"
+                       Margin="0, 10, 0, 0" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <controls:CustomEntry BorderColor="#d3d3d3"  Grid.Row="0"
+                                   x:Name="PasswordEntry"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="2" Padding="10" Placeholder="Enter Password" IsPassword="{Binding IsPassword}" Text="{Binding Password, Mode=TwoWay}">
+                                <controls:CustomEntry.Behaviors>
+                                    <xct:EventToCommandBehavior
+                                    EventName="TextChanged"
+                                    Command="{Binding PasswordTextChanged}" />
+                                </controls:CustomEntry.Behaviors>
+                            </controls:CustomEntry>
+                            <ImageButton Source="eye_hidden"
+                               Command="{Binding ToggleIsPassword}"
+                               WidthRequest="24" VerticalOptions="Center" TranslationX="-10"
+                               BackgroundColor="Transparent"
+                               Grid.Row="0"
+                               Grid.Column="1"
+                               Grid.ColumnSpan="1"
+                               HorizontalOptions="End">
+                                <ImageButton.Triggers>
+                                    <DataTrigger TargetType="ImageButton" Binding="{Binding IsPassword}" Value="True" >
+                                        <Setter Property="Source" Value="eye_icon" />
+                                    </DataTrigger>
+                                </ImageButton.Triggers>
+                            </ImageButton>
+                        </Grid>
+
+                        <StackLayout Orientation="Horizontal" Spacing="0">
+
+                            <Label Text="{x:Static res:AppResources.RememberMe}"
+                           Style="{StaticResource SmallPrimaryLabelStyle}"
+                           VerticalOptions="Center">
+
+                                <Label.GestureRecognizers>
+
+                                    <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                  Command="{Binding RememberMeCommand}" />
+
+                                </Label.GestureRecognizers>
+
+                            </Label>
+
+                            <CheckBox Color="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                                Dark={StaticResource PrimaryColorDark}}"
+                              VerticalOptions="Center"
+                              IsChecked="{Binding RememberMe}" />
+
+                            <Label Text="{x:Static res:AppResources.ForgotPassword}"
+                           TextColor="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                                Dark={StaticResource PrimaryColorDark}}"
+                           TextDecorations="Underline"
+                           FontSize="Medium"
+                           HorizontalTextAlignment="End"
+                           VerticalOptions="Center"
+                           HorizontalOptions="FillAndExpand">
+
+                                <Label.GestureRecognizers>
+
+                                    <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                  Command="{Binding ResetPasswordCommand}" />
+
+                                </Label.GestureRecognizers>
+
+                            </Label>
+
+                        </StackLayout>
+
+                        <ContentView HeightRequest="134"/>
+
+                    </StackLayout>
+
+                </StackLayout>
+            </ScrollView>
+
+            <pv:PancakeView Style="{StaticResource ButtonPanelStyle}"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression
+                            Type=RelativeToParent, Property=Width, Factor=1}"
+                        RelativeLayout.YConstraint="{ConstraintExpression
+                            Type=RelativeToParent, Property=Height, Factor=1,
+                            Constant=-134}">
+
+                <pv:PancakeView.Shadow>
+                    <pv:DropShadow />
+                </pv:PancakeView.Shadow>
+
+                <StackLayout Spacing="20">
+
+                    <Label Style="{StaticResource MediumSecondaryLabelStyle}"
+                       HorizontalTextAlignment="Center"
+                       HorizontalOptions="FillAndExpand"
+                       HeightRequest="24">
+
+                        <Label.FormattedText>
+
+                            <FormattedString>
+
+                                <Span Text="{x:Static res:AppResources.DontHaveAccount}" />
+
+                                <Span Text="{x:Static res:AppResources.SignUp}"
+                                  TextColor="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                                        Dark={StaticResource PrimaryColorDark}}"
+                                  TextDecorations="Underline">
+
+                                    <Span.GestureRecognizers>
+
+                                        <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                          Command="{Binding SignUpCommand}" />
+
+                                    </Span.GestureRecognizers>
+
+                                </Span>
+
+                            </FormattedString>
+
+                        </Label.FormattedText>
+
+                    </Label>
+
+                    <Button Style="{StaticResource PrimaryButtonStyle}"
+                        IsEnabled="{Binding IsLoginEnabled}"
+                        Text="{x:Static res:AppResources.LogIn}"
+                        Command="{Binding LoginCommand}"
+                        HeightRequest="50"/>
+
+                </StackLayout>
+
+            </pv:PancakeView>
+        </RelativeLayout>
+
+        <BoxView x:Name="Filter"
+                     AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="All"
+                     BackgroundColor="#d3d3d3"
+                     IsVisible="{Binding IsBusy}"
+                     Opacity="0.60" />
+        <ActivityIndicator  IsRunning="True"
+                            VerticalOptions="CenterAndExpand"
+                            IsVisible="{Binding IsBusy}"
+                            HorizontalOptions="CenterAndExpand"
+                             AbsoluteLayout.LayoutBounds="0.5,0.5,0.5,0.5"
+                                        AbsoluteLayout.LayoutFlags="All"/>
+    </AbsoluteLayout>
+</ContentPage>

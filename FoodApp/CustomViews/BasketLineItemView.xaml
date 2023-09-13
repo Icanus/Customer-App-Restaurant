@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FoodApp.ViewModels"
+             xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:md="clr-namespace:FoodApp.MaterialDesign"
+             xmlns:converter="clr-namespace:FoodApp.Converters"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
+             x:Class="FoodApp.CustomViews.BasketLineItemView"
+             x:DataType="vm:BasketItemViewModel"
+             Padding="10">
+
+    <ContentView.Resources>
+        <converter:RemoveDeleteIconConverter x:Key="RemoveDeleteIconConverter"/>
+    </ContentView.Resources>
+
+    <ContentView.Content>
+
+        <pv:PancakeView CornerRadius="20, 20, 20, 20"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource CardColorLight},
+                            Dark={StaticResource CardColorDark}}">
+
+            <Grid
+                         Padding="10"
+                         HorizontalOptions="FillAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="33*"/>
+                    <ColumnDefinition Width="33*"/>
+                    <ColumnDefinition Width="33*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+
+                <ffimageloading:CachedImage
+                        DownsampleToViewSize="True"
+                        BitmapOptimizations ="True"
+                       Grid.Column="0"
+                       Grid.Row="0"
+                       Source="{Binding ProductImage}"
+                       Aspect="AspectFill"
+                       WidthRequest="80"
+                       HeightRequest="80"
+                       VerticalOptions="Start"/>
+
+                <StackLayout    Grid.Column="0"
+                                Grid.Row="1"
+                                 Orientation="Horizontal"
+                                 HorizontalOptions="StartAndExpand">
+
+                    <ImageButton WidthRequest="40"
+                                     HeightRequest="40"
+                                     BackgroundColor="Transparent"
+                                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:BasketViewModel}},
+                                        Path=RemoveItemCommand}"
+                                     CommandParameter="{Binding .}">
+
+                        <ImageButton.Source>
+                            <FontImageSource Glyph="{Binding Quantity, Converter={StaticResource RemoveDeleteIconConverter}}"
+                                                 FontFamily="Material"
+                                                 Color="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                                                    Dark={StaticResource PrimaryColorDark}}"
+                                                 Size="120" />
+                        </ImageButton.Source>
+
+                    </ImageButton>
+
+                    <Label Text="{Binding Quantity}"
+                               Style="{StaticResource BoldMediumSecondaryLabelStyle}"
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center"
+                               MinimumWidthRequest="40"/>
+
+                    <ImageButton WidthRequest="40"
+                                     HeightRequest="40"
+                                     BackgroundColor="Transparent"
+                                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:BasketViewModel}},
+                                        Path=AddItemCommand}"
+                                     CommandParameter="{Binding .}">
+
+                        <ImageButton.Source>
+                            <FontImageSource Glyph="{x:Static md:Icons.AddCircle}"
+                                                 FontFamily="Material"
+                                                 Color="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                                                    Dark={StaticResource PrimaryColorDark}}"
+                                                 Size="120" />
+                        </ImageButton.Source>
+
+                    </ImageButton>
+                </StackLayout>
+                <StackLayout Grid.Row="0"
+                           Grid.Column="1" Grid.ColumnSpan="2" Orientation="Vertical" HorizontalOptions="StartAndExpand">
+                <Label 
+                           Text="{Binding ProductName}"
+                           Style="{StaticResource BoldMediumPrimaryLabelStyle}"/>
+
+                    <Label Text="{Binding IngredientString}"
+                           TextDecorations="Strikethrough"
+                           TextColor="{AppThemeBinding Light={StaticResource SecondaryTextColorLight},
+                                Dark={StaticResource SecondaryTextColorDark}}"
+                           FontSize="Small"/>
+
+                    <Label Text="{Binding ChoiceString}"
+                           Style="{StaticResource SmallSecondaryLabelStyle}"/>
+
+                </StackLayout>
+
+                <Label 
+                                Grid.Row="1" Grid.Column="1"
+                                Text="{Binding UnitPrice, StringFormat='${0:F2}'}"
+                                Style="{StaticResource BoldMediumSecondaryLabelStyle}"
+                               MaxLines="1"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               HorizontalTextAlignment="Center"/>
+
+
+                        <Label 
+                                
+                                Grid.Row="1" Grid.Column="2"
+                                Text="{Binding UnitTotalPrice, StringFormat='${0:F2}'}"
+                                Style="{StaticResource BoldMediumSecondaryLabelStyle}"
+                               MaxLines="1"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               HorizontalTextAlignment="Center"/>
+
+
+
+            </Grid>
+
+        </pv:PancakeView>
+
+    </ContentView.Content>
+
+</ContentView>

@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<FlyoutPage  xmlns:controls="clr-namespace:FoodApp.Controls" xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="clr-namespace:FoodApp.Views.Flyout" xmlns:local2="clr-namespace:FoodApp.Views"
+             x:Class="FoodApp.MainPage"
+             NavigationPage.HasNavigationBar="False">
+    <FlyoutPage.Resources>
+        <Style x:Key="BaseStyle" TargetType="Element">
+
+            <Setter Property="Shell.BackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource TabBarBackgroundColorLight},
+                        Dark={StaticResource TabBarBackgroundColorDark}}" />
+
+            <Setter Property="Shell.ForegroundColor"
+                    Value="{AppThemeBinding Light={StaticResource PrimaryTextColorLight},
+                        Dark={StaticResource PrimaryTextColorDark}}" />
+
+            <Setter Property="Shell.TitleColor"
+                    Value="{AppThemeBinding Light={StaticResource PrimaryTextColorLight},
+                        Dark={StaticResource PrimaryTextColorDark}}" />
+
+            <Setter Property="Shell.TabBarTitleColor"
+                    Value="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                        Dark={StaticResource PrimaryColorDark}}" />
+
+            <Setter Property="Shell.TabBarUnselectedColor"
+                    Value="{AppThemeBinding Light=#80000000, Dark=#80FFFFFF}" />
+
+            <Setter Property="Shell.TabBarUnselectedColor"
+                    Value="{AppThemeBinding Light=#80000000, Dark=#80FFFFFF}" />
+
+            <Setter Property="Shell.DisabledColor"
+                    Value="{AppThemeBinding Light=#40000000, Dark=#40FFFFFF}" />
+
+            <Setter Property="Shell.TabBarDisabledColor"
+                    Value="{AppThemeBinding Light=#40000000, Dark=#40FFFFFF}" />
+
+        </Style>
+
+        <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
+    </FlyoutPage.Resources>
+    <FlyoutPage.Flyout>
+        <local:FlyoutMenuPage x:Name="flyout"/>
+    </FlyoutPage.Flyout>
+
+    <FlyoutPage.Detail>
+        <NavigationPage>
+            <x:Arguments>
+                <local2:HomePage></local2:HomePage>
+            </x:Arguments>
+        </NavigationPage>
+    </FlyoutPage.Detail>
+    
+</FlyoutPage>

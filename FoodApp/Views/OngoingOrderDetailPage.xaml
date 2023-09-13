@@ -1,0 +1,403 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FoodApp.ViewModels"
+             xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:converters="clr-namespace:FoodApp.Converters"
+             xmlns:md="clr-namespace:FoodApp.MaterialDesign"
+             xmlns:res="clr-namespace:FoodApp.Resources" xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps" xmlns:dragview="clr-namespace:Xamarin.Forms.DragView;assembly=Xamarin.Forms.DragView" xmlns:behaviors="clr-namespace:FoodApp.Behaviors" xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+             BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},
+                Light={StaticResource BackgroundColorLight}}"
+             x:Class="FoodApp.Views.OngoingOrderDetailPage">
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal" 
+          HorizontalOptions="End">
+        <abstractions:TintedImage
+         Margin="5"
+          VerticalOptions="Center"
+          HorizontalOptions="End"
+          Grid.Column="1"
+             TintColor="White"
+           BackgroundColor="Transparent">
+
+            <abstractions:TintedImage.Source>
+
+                <FontImageSource Glyph="{x:Static md:Icons.Refresh}"
+                       FontFamily="Material"
+                       Color="WhiteSmoke"
+                       Size="30" />
+
+            </abstractions:TintedImage.Source>
+            <abstractions:TintedImage.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1"
+          Command="{Binding RefreshOrder}"
+          CommandParameter="{Binding .}" />
+            </abstractions:TintedImage.GestureRecognizers>
+        </abstractions:TintedImage>
+        <abstractions:TintedImage
+                IsVisible="{Binding IsDriverDetailAvailable}"
+                Margin="5"
+                 VerticalOptions="Center"
+                 HorizontalOptions="End"
+                 Grid.Column="1"
+                    TintColor="White"
+                  BackgroundColor="Transparent">
+
+            <abstractions:TintedImage.Source>
+
+                <FontImageSource Glyph="{x:Static md:Icons.Motorcycle}"
+                              FontFamily="Material"
+                              Color="WhiteSmoke"
+                              Size="30" />
+
+            </abstractions:TintedImage.Source>
+            <abstractions:TintedImage.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1"
+                 Command="{Binding DriverInfo}"
+                 CommandParameter="{Binding .}" />
+            </abstractions:TintedImage.GestureRecognizers>
+        </abstractions:TintedImage>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.Resources>
+        <converters:OrderStatusIconConverter x:Key="OrderStatusIconConverter"/>
+        <converters:ShortDateConverter x:Key="ShortDateConverter"/>
+    </ContentPage.Resources>
+    <AbsoluteLayout>
+    <RelativeLayout>
+            <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" Margin="-1"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}" >
+                <StackLayout Orientation="Horizontal" Spacing="0">
+                    <Button Text="Details" x:Name="tab1Button" Style="{StaticResource TabButtonStyle}" Clicked="Tab1Button_Clicked" HorizontalOptions="FillAndExpand"/>
+                    <Button Text="Maps" x:Name="tab2Button" Style="{StaticResource TabButtonStyle}" Clicked="Tab2Button_Clicked" HorizontalOptions="FillAndExpand" />
+                </StackLayout>
+            </StackLayout>
+            <ContentView x:Name="OrderDetails" Padding="8" RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.08}"
+          RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+          RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.95}">
+
+                <CollectionView ItemsSource="{Binding LineItems}"
+             SelectionMode="None"
+             VerticalOptions="Start"
+             RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+             RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}">
+
+                    <CollectionView.ItemTemplate>
+
+                        <DataTemplate>
+
+                            <ContentView Padding="8">
+
+                                <pv:PancakeView CornerRadius="20, 20, 20, 20"
+                             BackgroundColor="{AppThemeBinding Light={StaticResource CardColorLight},
+                                 Dark={StaticResource CardColorDark}}">
+
+
+                                    <Grid Padding="10" HorizontalOptions="FillAndExpand">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="33*"/>
+                                            <ColumnDefinition Width="33*"/>
+                                            <ColumnDefinition Width="33*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="70"/>
+                                            <RowDefinition Height="30"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Image Source="{Binding ProductImage}"
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            Aspect="AspectFill"
+                            WidthRequest="80"
+                            HeightRequest="80"
+                            VerticalOptions="Start"/>
+
+                                        <StackLayout    
+                             Grid.Column="0"
+                             Grid.Row="1"
+                             Orientation="Horizontal"
+                             HorizontalOptions="Center">
+                                            <Label Text="{Binding Quantity}"
+                                Style="{StaticResource BoldMediumSecondaryLabelStyle}"
+                                HorizontalTextAlignment="Center"
+                                VerticalTextAlignment="Center"
+                                MinimumWidthRequest="40"/>
+                                        </StackLayout>
+
+                                        <StackLayout HorizontalOptions="FillAndExpand" Grid.Row="0"
+                Grid.Column="1" Grid.ColumnSpan="2">
+
+                                            <Label Text="{Binding ProductName}"
+                                Style="{StaticResource BoldSmallPrimaryLabelStyle}"/>
+
+                                            <Label Text="{Binding IngredientString}"
+                                TextDecorations="Strikethrough"
+                                TextColor="{AppThemeBinding Light={StaticResource SecondaryTextColorLight},
+                                     Dark={StaticResource SecondaryTextColorDark}}"
+                                FontSize="Small"/>
+
+                                            <Label Text="{Binding ChoiceString}"
+                                Style="{StaticResource SmallSecondaryLabelStyle}"/>
+
+                                        </StackLayout>
+                                        <Label 
+                     Grid.Row="1" Grid.Column="1"
+                     Text="{Binding UnitPrice, StringFormat='${0:F2}'}"
+                     Style="{StaticResource BoldMediumSecondaryLabelStyle}"
+                    MaxLines="1"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    HorizontalTextAlignment="Center"/>
+
+
+                                        <Label 
+                     
+                     Grid.Row="1" Grid.Column="2"
+                     Text="{Binding Total, StringFormat='${0:F2}'}"
+                     Style="{StaticResource BoldMediumSecondaryLabelStyle}"
+                    MaxLines="1"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    HorizontalTextAlignment="Center"/>
+                                    </Grid>
+
+                                </pv:PancakeView>
+
+                            </ContentView>
+
+                        </DataTemplate>
+
+                    </CollectionView.ItemTemplate>
+
+
+
+                    <CollectionView.Footer>
+                        <ContentView HeightRequest="263"/>
+                    </CollectionView.Footer>
+
+                </CollectionView>
+
+            </ContentView>
+            <ContentView x:Name="MapsDetails"
+RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.06}"
+          RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+          RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.92}">
+                <StackLayout x:Name="mystacklayout" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+             RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+             RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}">
+
+                </StackLayout>
+            </ContentView>
+
+           
+
+        </RelativeLayout>
+        <StackLayout x:Name="stackLayout"
+                     Padding="10"
+                     BackgroundColor="White"
+                     AbsoluteLayout.LayoutFlags="All"
+                     behaviors:SwipeBehaviorAttachedProperties.SwipeDownHeight="0.2">
+            <StackLayout.Behaviors>
+                <behaviors:SwipeBehavior x:Name="MySwipeBehavior" />
+            </StackLayout.Behaviors>
+            <StackLayout.GestureRecognizers>
+                <SwipeGestureRecognizer Direction="Up" Swiped="OnSwipeUp" />
+                <SwipeGestureRecognizer Direction="Down" Swiped="OnSwipeDown" />
+            </StackLayout.GestureRecognizers>
+
+            <StackLayout Spacing="5">
+
+                <BoxView WidthRequest="100" Color="#d3d3d3" HorizontalOptions="Center" HeightRequest="5"/>
+                <StackLayout Orientation="Horizontal"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center">
+
+                    <Label Text="{Binding Status, Converter={StaticResource OrderStatusIconConverter}}"
+                           FontFamily="Material"
+                           FontSize="30"
+                           TextColor="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                                Dark={StaticResource PrimaryColorDark}}"
+                           VerticalTextAlignment="Center"
+                           HeightRequest="32"/>
+
+                    <Label Text="{Binding Status}"
+                           Style="{StaticResource TitlePrimaryLabelStyle}"
+                           VerticalTextAlignment="Center"
+                           HeightRequest="32"/>
+
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal"
+                             VerticalOptions="Center">
+
+                    <Label Text="{Binding DateGmt, Converter={StaticResource ShortDateConverter}}"
+                           Style="{StaticResource BoldMediumSecondaryLabelStyle}"
+                           MaxLines="1"
+                           LineBreakMode="TailTruncation"
+                           HeightRequest="24"/>
+
+
+                    <Label
+                           Style="{StaticResource BoldMediumSecondaryLabelStyle}"
+                           MaxLines="1"
+                           LineBreakMode="TailTruncation"
+                           HeightRequest="24">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="#ORD-000" />
+                                <Span Text="{Binding Id}"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                </StackLayout>
+
+
+                <Label Text="{Binding ShippingAddress}"
+                       Style="{StaticResource SmallSecondaryLabelStyle}"
+                       MaxLines="1"/>
+                <Label Text="{Binding ChangeAddress}"
+                       Style="{StaticResource SmallSecondaryLabelStyle}"
+                       TextColor="DarkOrange"
+                       MaxLines="1"
+                           IsVisible="False"
+                           HeightRequest="50"/>
+                <Label Text="Change Address"
+                        TextColor="Blue"
+                       IsVisible="{Binding IsChangeAddressAvailable}"
+                       FontAttributes="Italic"
+                        VerticalTextAlignment="Start"
+                        TextDecorations="Underline"
+                       Style="{StaticResource SmallSecondaryLabelStyle}" 
+                        HeightRequest="50">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding NavigateToChangeAddressPage}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <Label Text=""
+                       Style="{StaticResource SmallSecondaryLabelStyle}"
+                       TextColor="DarkOrange"
+                       MaxLines="1"
+                           HeightRequest="50"/>
+                <StackLayout Orientation="Horizontal">
+
+                    <Label Text="AdditionalFee"
+                           Style="{StaticResource MediumSecondaryLabelStyle}"
+                           HorizontalOptions="FillAndExpand"
+                           HeightRequest="24"/>
+
+                    <Label Text="{Binding AdditionalFee, StringFormat='${0:F2}'}"
+                           Style="{StaticResource MediumSecondaryLabelStyle}"
+                           HorizontalOptions="FillAndExpand"
+                           HorizontalTextAlignment="End"
+                           HeightRequest="24"/>
+
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+
+                    <Label Text="Discount"
+                           Style="{StaticResource MediumSecondaryLabelStyle}"
+                           HorizontalOptions="FillAndExpand"
+                           HeightRequest="24"/>
+
+                    <Label Text="{Binding Discount, StringFormat='${0:F2}'}"
+                           Style="{StaticResource MediumSecondaryLabelStyle}"
+                           HorizontalOptions="FillAndExpand"
+                           HorizontalTextAlignment="End"
+                           HeightRequest="24"/>
+
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal">
+
+                    <Label Text="{x:Static res:AppResources.Total}"
+                           Style="{StaticResource MediumSecondaryLabelStyle}"
+                           HorizontalOptions="FillAndExpand"
+                           HeightRequest="24"/>
+
+                    <Label Text="{Binding Total, StringFormat='${0:F2}'}"
+                           Style="{StaticResource MediumSecondaryLabelStyle}"
+                           HorizontalOptions="FillAndExpand"
+                           HorizontalTextAlignment="End"
+                           HeightRequest="24"/>
+
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal">
+
+                    <Label Text="{x:Static res:AppResources.DeliveryCharge}"
+                           Style="{StaticResource MediumSecondaryLabelStyle}"
+                           HorizontalOptions="FillAndExpand"
+                           HeightRequest="24"/>
+
+                    <Label Text="{Binding Shipping, StringFormat='${0:F2}'}"
+                           Style="{StaticResource MediumSecondaryLabelStyle}"
+                           HorizontalOptions="FillAndExpand"
+                           HorizontalTextAlignment="End"
+                           HeightRequest="24"/>
+
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal">
+
+                    <Label Text="{x:Static res:AppResources.GrandTotal}"
+                           Style="{StaticResource BoldMediumSecondaryLabelStyle}"
+                           HorizontalOptions="FillAndExpand"
+                           HeightRequest="24"/>
+
+                    <Label Text="{Binding GrandTotal, StringFormat='${0:F2}'}"
+                           Style="{StaticResource BoldMediumSecondaryLabelStyle}"
+                           HorizontalOptions="FillAndExpand"
+                           HorizontalTextAlignment="End"
+                           HeightRequest="24"/>
+
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+        <Frame x:Name="AbsoluteStackLayout"
+                     IsVisible="{Binding HasOrders}"
+                     AbsoluteLayout.LayoutBounds="0.02, 0.10, 140, 80"
+                     AbsoluteLayout.LayoutFlags="PositionProportional"
+                     CornerRadius="10"
+                     BackgroundColor="{StaticResource colorAccent}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Label Style="{StaticResource SmallPrimaryLabelStyle}" TextColor="White" Grid.Row="1">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="ETA: "/>
+                            <Span Text="{Binding ETA}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label Style="{StaticResource SmallPrimaryLabelStyle}" TextColor="White" Grid.Row="0">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="#ORDS-000"/>
+                            <Span Text="{Binding Id}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </Grid>
+        </Frame>
+        <ImageButton
+                    x:Name="ImgMapImage"
+                    Source="{Binding MapImage}"
+                    Clicked="ImageButton_Clicked"
+                    BackgroundColor="Transparent"
+                    HeightRequest="50"
+                    AbsoluteLayout.LayoutBounds="0.97,0.4,0.09,0.1"
+                    AbsoluteLayout.LayoutFlags="All"/>
+        <ActivityIndicator  IsRunning="True"
+                            IsVisible="{Binding IsBusy}"
+                            VerticalOptions="EndAndExpand"
+                            HorizontalOptions="CenterAndExpand"
+                             AbsoluteLayout.LayoutBounds="0.5,0.1,0.5,0.5"
+                                        AbsoluteLayout.LayoutFlags="All"/>
+    </AbsoluteLayout>
+</ContentPage>

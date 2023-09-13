@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FoodApp.Views.Flyout.FlyoutMenuPage"
+             xmlns:local1="clr-namespace:FoodApp.Models"
+             xmlns:local2="clr-namespace:FoodApp.Views" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             Title="FlyoutMenu">
+    <ContentPage.Content>
+        <StackLayout Padding="10">
+            <Label Text="{Binding FullName}" IsVisible="{Binding IsLogin}" Margin="5" FontAttributes="Bold" TextColor="{StaticResource PrimaryTextColorLight}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding MyAccountPageCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
+            <BoxView HeightRequest="1" IsVisible="{Binding IsLogin}" BackgroundColor="LightGray">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding MyAccountPageCommand}"/>
+                </BoxView.GestureRecognizers>
+            </BoxView>
+            <Grid Margin="5" Padding="5" IsVisible="{Binding IsLogin}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".70*"/>
+                    <ColumnDefinition Width=".30*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="AUTO"/>
+                    <RowDefinition Height="AUTO"/>
+                </Grid.RowDefinitions>
+                <Label Text="Points" IsVisible="{Binding IsActiveMember}" FontSize="13" Grid.Column="0" TextColor="{StaticResource PrimaryTextColorLight}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToWalletHistory}"/>
+                    </Label.GestureRecognizers>
+
+                </Label>
+                <Label Text="{Binding Balance}" IsVisible="{Binding IsActiveMember}" FontSize="13" Grid.Column="1" HorizontalTextAlignment="End" TextColor="{StaticResource PrimaryTextColorLight}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToWalletHistory}"/>
+                    </Label.GestureRecognizers>
+
+                </Label>
+                <Label Text="Get special offers and discounts with our loyalty points" FontSize="Micro" IsVisible="{Binding IsNotActiveMember}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" HorizontalTextAlignment="Center" TextColor="{StaticResource PrimaryTextColorLight}"/>
+                <Label Text="Become a member"  Grid.Column="0"
+                                 Grid.Row="1"
+                                 Grid.ColumnSpan="2" FontAttributes="Italic"  IsVisible="{Binding IsNotActiveMember}" FontSize="13" HorizontalTextAlignment="Center" TextColor="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                                        Dark={StaticResource PrimaryColorDark}}"
+                                  TextDecorations="Underline">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToBecomeAMemberPage}"/>
+                    </Label.GestureRecognizers>
+
+                </Label>
+
+
+            </Grid>
+            <BoxView HeightRequest="1" IsVisible="{Binding IsLogin}" BackgroundColor="LightGray"/>
+            <ListView x:Name="ListView" IsVisible="{Binding IsLogin}" SeparatorVisibility="Default" x:FieldModifier="public" Margin="10">
+                <ListView.ItemsSource>
+                    <x:Array Type="{x:Type local1:FlyoutItem}">
+                        <local1:FlyoutItem Title="Orders" IconSource="lists" TargetType="{x:Type local2:OrdersPage}"/>
+                    </x:Array>
+                </ListView.ItemsSource>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="33"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="{Binding IconSource}" VerticalOptions="Center"/>
+                                <Label Grid.Column="1" Text="{Binding Title}" VerticalTextAlignment="Center"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <ListView IsVisible="{Binding IsNotLogin}" x:FieldModifier="public" Margin="10">
+                <ListView.ItemsSource>
+                  
+                </ListView.ItemsSource>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <BoxView BackgroundColor="#d3d3d3" HeightRequest="1"/>
+            <Button Text="Sign up or Login" IsVisible="{Binding IsNotLogin}" Command="{Binding SignUpLogin}" BackgroundColor="Transparent"/>
+            <Button Text="Log out" IsVisible="{Binding IsLogin}" Command="{Binding Logout}" BackgroundColor="Transparent"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

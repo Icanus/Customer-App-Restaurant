@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:model="clr-namespace:FoodApp.Models"
+             x:Class="FoodApp.CustomViews.OngoingOrdersView"
+             xmlns:res="clr-namespace:FoodApp.Resources"
+                xmlns:vm="clr-namespace:FoodApp.ViewModels" 
+             xmlns:converters="clr-namespace:FoodApp.Converters" xmlns:dragview="clr-namespace:Xamarin.Forms.DragView;assembly=Xamarin.Forms.DragView"
+             x:Name="View">
+
+    <ContentView.Resources>
+        <converters:OrderStatusIconConverter x:Key="OrderStatusIconConverter"/>
+        <converters:LongDateConverter x:Key="LongDateConverter"/>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <pv:PancakeView Style="{StaticResource ButtonPanelStyle}" 
+                    BackgroundColor="{StaticResource colorAccent}"
+                         CornerRadius="20, 20, 20, 20" Margin="5">
+
+                    <Grid ColumnDefinitions=".10*, .65* ,.25*"
+                                    RowDefinitions="33"
+                                  x:DataType="model:OrderParameter"
+                                  BindingContext="{Binding Source={x:Reference View}, Path=OngoingOrder}" >
+
+                <Label Grid.Row="0" Grid.Column="0"
+                                       Text="{Binding Status, Converter={StaticResource OrderStatusIconConverter}}"
+                                       TextColor="Orange"
+                                       FontFamily="Material"
+                                       FontSize="30"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center" />
+                <!--<ActivityIndicator  Grid.Column="0" Grid.Row="0" HeightRequest="30" Color="{StaticResource PrimaryColorLight}" VerticalOptions="Center"
+                                       HorizontalOptions="Center" IsRunning="True"/>-->
+
+                <Label Grid.Column="1"
+                                      VerticalTextAlignment="Center"
+                                       Style="{StaticResource SmallSecondaryLabelStyle}"
+                                       MaxLines="1"
+                                       LineBreakMode="TailTruncation">
+
+                    <Label.FormattedText>
+
+                        <FormattedString>
+
+                            <Span Text="{Binding Status}"
+                                                  Style="{StaticResource BoldSmallSecondaryLabelStyle}" TextColor="#ffffff"/>
+
+                            <Span Text=": ORD-000" TextColor="#ffffff"/>
+                            <Span Text="{Binding Id}" TextColor="#ffffff"/>
+
+                        </FormattedString>
+
+                    </Label.FormattedText>
+
+                </Label>
+
+                <pv:PancakeView CornerRadius="15"
+                                 Grid.Column="2"
+                                 Padding="5" 
+                            BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                               Dark={StaticResource PrimaryColorDark}}">
+
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+
+                                <Label 
+                                       Text="{Binding GrandTotal, StringFormat='${0:F2}'}"
+                                       FontSize="Small"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Center" TextColor="#ffffff"/>
+
+                            </StackLayout>
+
+                        </pv:PancakeView>
+
+
+
+                        <Grid.GestureRecognizers>
+
+                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                          Command="{Binding Source={x:Reference View}, Path=ItemTapped}"
+                                                          CommandParameter="{Binding Source={x:Reference View}, Path=OngoingOrder}" />
+
+                        </Grid.GestureRecognizers>
+
+                    </Grid>
+
+                </pv:PancakeView>
+    </ContentView.Content>
+</ContentView>

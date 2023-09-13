@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FoodApp.Views.MyAccountPage"
+             xmlns:vm="clr-namespace:FoodApp.ViewModels"
+             xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:md="clr-namespace:FoodApp.MaterialDesign"
+             xmlns:res="clr-namespace:FoodApp.Resources"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             xmlns:local="clr-namespace:FoodApp.Behaviors" 
+             xmlns:controls="clr-namespace:FoodApp.Controls" xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions" xmlns:xct="http://xamarin.com/schemas/2020/toolkit" xmlns:customview="clr-namespace:FoodApp.CustomViews" xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms" xmlns:forms1="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             ios:Page.UseSafeArea="true"
+             x:Name="Page"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},
+                Light={StaticResource BackgroundColorLight}}">
+    <AbsoluteLayout x:Name="PageLayout">
+        <RelativeLayout>
+
+            <ScrollView RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,
+                        Property=Width, Factor=1}"
+                    RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,
+                        Property=Height, Factor=1}">
+
+                <StackLayout Spacing="10">
+
+                    <Grid HorizontalOptions="FillAndExpand" Padding="30">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80*"/>
+                            <ColumnDefinition Width="20*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" Style="{StaticResource BoldTitlePrimaryLabelStyle}" Text="My Account" VerticalOptions="Center"/>
+
+                        <abstractions:TintedImage
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="End"
+                                        Grid.Column="1"
+                                         BackgroundColor="Transparent">
+
+                            <abstractions:TintedImage.Source>
+
+                                <FontImageSource Glyph="{x:Static md:Icons.Close}"
+                                                     FontFamily="Material"
+                                                     Color="WhiteSmoke"
+                                                     Size="30" />
+
+                            </abstractions:TintedImage.Source>
+                            <abstractions:TintedImage.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                        Command="{Binding CloseCommand}"
+                                        CommandParameter="{Binding .}" />
+                            </abstractions:TintedImage.GestureRecognizers>
+                        </abstractions:TintedImage>
+                    </Grid>
+                    <BoxView Margin="30,0,30,0" BackgroundColor="#d3d3d3" HeightRequest="1"/>
+
+                    <customview:DeviceOfflineView Margin="5,0,5,-15" IsVisible="{Binding IsNotConnected}" />
+                    <StackLayout Padding="30">
+                        <Grid VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="100">
+                            <Frame CornerRadius="50" WidthRequest="80" HasShadow="False" Padding="0">
+                                <forms1:CachedImage Source="{Binding ImageFile}" Aspect="AspectFill" HeightRequest="100" WidthRequest="100" >
+                                    <forms1:CachedImage.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding UploadImage}"/>
+                                    </forms1:CachedImage.GestureRecognizers>
+                                </forms1:CachedImage>
+                            </Frame>
+                        </Grid>
+                        <Label Text="Click Here to upload profile" FontAttributes="Italic" HorizontalTextAlignment="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding UploadImage}"></TapGestureRecognizer>
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="{x:Static res:AppResources.FullnameRequired}"
+                       Style="{StaticResource SmallTertiaryLabelStyle}" />
+
+                        <controls:CustomEntry BorderColor="{StaticResource TertiaryTextColorDark}" Padding="10" BorderRadius="5" BorderWidth="1" Placeholder="Enter full name" ReturnType="Next" Text="{Binding FullName, Mode=TwoWay}" >
+                            <controls:CustomEntry.Behaviors>
+                                <xct:TextValidationBehavior MinimumLength="3" MaximumLength="100"
+                            DecorationFlags="Trim"
+                            InvalidStyle="{StaticResource InvalidEntryStyle}"/>
+                            </controls:CustomEntry.Behaviors>
+                        </controls:CustomEntry>
+
+                        <Label Text="{x:Static res:AppResources.Email}"
+                       Style="{StaticResource SmallTertiaryLabelStyle}" />
+                        <controls:CustomEntry BorderColor="{StaticResource TertiaryTextColorDark}" IsReadOnly="True"  Padding="10" BorderRadius="5" Placeholder="Enter Email Address" ReturnType="Next" Text="{Binding Email, Mode=TwoWay}" >
+                            <controls:CustomEntry.Behaviors>
+                                <xct:EmailValidationBehavior
+                            x:Name="EmailValidator"
+                            DecorationFlags="Trim"
+                            InvalidStyle="{StaticResource InvalidEntryStyle}"/>
+                            </controls:CustomEntry.Behaviors>
+                        </controls:CustomEntry>
+
+                        <Label Text="{x:Static res:AppResources.PhoneRequired}"
+                       Style="{StaticResource SmallTertiaryLabelStyle}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Frame
+                            Grid.Column="0"
+                    CornerRadius="10"
+                    VerticalOptions="Center"
+                    HorizontalOptions="FillAndExpand"
+                    Padding="0"
+                    BorderColor="{StaticResource TertiaryTextColorDark}"
+                            BackgroundColor="Transparent"
+                    IsClippedToBounds="True">
+                                <StackLayout Orientation="Horizontal"
+                                 HorizontalOptions="FillAndExpand"
+                                 VerticalOptions="FillAndExpand">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ShowPopupCommand}"/>
+                                    </StackLayout.GestureRecognizers>
+                                    <forms:SvgCachedImage
+                            HeightRequest="26"
+                            Source="{Binding SelectedCountry.FlagUrl}"
+                            VerticalOptions="CenterAndExpand"
+                            WidthRequest="26" 
+                            Margin="20,10,0,10"/>
+                                    <Label Text="{Binding SelectedCountry.CountryCode, StringFormat='(+{0})'}"
+                               VerticalTextAlignment="Center"
+                               Margin="20,0"
+                               HorizontalTextAlignment="End"
+                               HorizontalOptions="EndAndExpand"
+                               VerticalOptions="CenterAndExpand"/>
+                                </StackLayout>
+                            </Frame>
+                            <controls:CustomEntry Grid.Column="1" BorderColor="{StaticResource TertiaryTextColorDark}"  Padding="10" BorderRadius="5" Placeholder="Enter Phone number" Keyboard="Numeric" ReturnType="Next" Text="{Binding Phone , Mode=TwoWay}" />
+                        </Grid>
+
+                        <!--<Label Text="{x:Static res:AppResources.DateOfBirth}"
+                       Style="{StaticResource SmallTertiaryLabelStyle}" />
+                <Frame BorderColor="{StaticResource TertiaryTextColorDark}" CornerRadius="5" Padding="0" BackgroundColor="Transparent">
+                    <controls:CustomDatePicker Date="{Binding DateOfBirth , Mode=TwoWay}" Format="MM-dd-yyyy"/>
+                </Frame>-->
+
+                        <Label Text="{x:Static res:AppResources.Gender}"
+                       Style="{StaticResource SmallTertiaryLabelStyle}" />
+                        <Grid ColumnDefinitions="*, *"
+                      RowDefinitions="*"
+                      RowSpacing="0"
+                      ColumnSpacing="20">
+                            <RadioButton Grid.Column="0"
+                           Value="Male" Content="Male" IsChecked="True" Style="{StaticResource SmallTertiaryLabelStyle}">
+                                <RadioButton.Behaviors>
+                                    <local:EventToCommandBehavior EventName="CheckedChanged" Command="{Binding Source={x:Reference Page}, Path=BindingContext.RadioCommand}" CommandParameter="Male"/>
+                                </RadioButton.Behaviors>
+                            </RadioButton>
+                            <RadioButton Grid.Column="1"
+                           Value="Female" Content="Female" Style="{StaticResource SmallTertiaryLabelStyle}">
+                                <RadioButton.Behaviors>
+                                    <local:EventToCommandBehavior EventName="CheckedChanged" Command="{Binding Source={x:Reference Page}, Path=BindingContext.RadioCommand}" CommandParameter="Female"/>
+                                </RadioButton.Behaviors>
+                            </RadioButton>
+
+                        </Grid>
+                        <Label Text="{x:Static res:AppResources.PasswordRequired}"
+                           Style="{StaticResource SmallTertiaryLabelStyle}" />
+                        <Grid Grid.Row="1" Grid.Column="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <controls:CustomEntry IsReadOnly="{Binding IsPasswordReadOnly}" BorderColor="{StaticResource TertiaryTextColorDark}" IsPassword="{Binding IsPassword}" Padding="10" BorderRadius="5"  Grid.Row="0"
+                                   x:Name="PasswordEntry"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="2" Placeholder="Enter Password" ReturnType="Next"
+                           Text="{Binding Password, Mode=TwoWay}" />
+                            <ImageButton Source="eye_hidden"
+                               Command="{Binding ToggleIsPassword}"
+                               WidthRequest="24" VerticalOptions="Center" TranslationX="-10"
+                               BackgroundColor="Transparent"
+                               Grid.Row="0"
+                               Grid.Column="1"
+                               Grid.ColumnSpan="1"
+                               HorizontalOptions="End">
+                                <ImageButton.Triggers>
+                                    <DataTrigger TargetType="ImageButton" Binding="{Binding IsPassword}" Value="True" >
+                                        <Setter Property="Source" Value="eye_icon" />
+                                    </DataTrigger>
+                                </ImageButton.Triggers>
+                            </ImageButton>
+                        </Grid>
+
+                        <Label Grid.Column="1"
+                           Text="{x:Static res:AppResources.ConfirmPasswordRequired}"
+                           Style="{StaticResource SmallTertiaryLabelStyle}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <controls:CustomEntry x:Name="ConfirmPasswordEntry" IsReadOnly="{Binding IsPasswordReadOnly}"
+                                   Grid.Column="0"
+                                   Grid.Row="0"
+                                   Grid.ColumnSpan="2" BorderColor="{StaticResource TertiaryTextColorDark}" IsPassword="{Binding IsConfirmPassword}" Padding="10" BorderRadius="5" Placeholder="Enter Confirm" ReturnType="Done"
+                                   Text="{Binding ConfirmPassword, Mode=TwoWay}" />
+                            <ImageButton Source="eye_hidden"
+                               Command="{Binding ToggleIsConfirmPassword}"
+                               WidthRequest="24" VerticalOptions="Center" TranslationX="-10"
+                               BackgroundColor="Transparent"
+                               Grid.Row="0"
+                               Grid.Column="1"
+                               Grid.ColumnSpan="1"
+                               HorizontalOptions="End">
+                                <ImageButton.Triggers>
+                                    <DataTrigger TargetType="ImageButton" Binding="{Binding IsConfirmPassword}" Value="True" >
+                                        <Setter Property="Source" Value="eye_icon" />
+                                    </DataTrigger>
+                                </ImageButton.Triggers>
+                            </ImageButton>
+                        </Grid>
+                    </StackLayout>
+                    <ContentView HeightRequest="134"/>
+
+
+                </StackLayout>
+
+            </ScrollView>
+
+            <pv:PancakeView Style="{StaticResource ButtonPanelStyle}"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression
+                            Type=RelativeToParent, Property=Width, Factor=1}"
+                        RelativeLayout.YConstraint="{ConstraintExpression
+                            Type=RelativeToParent, Property=Height, Factor=1,
+                            Constant=-124}">
+
+                <pv:PancakeView.Shadow>
+                    <pv:DropShadow />
+                </pv:PancakeView.Shadow>
+
+                <StackLayout Spacing="20" VerticalOptions="End">
+
+                    <Label Style="{StaticResource SmallLabelStyle}" HorizontalTextAlignment="Center" VerticalOptions="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="V"/>
+                                <Span Text="{Binding AppVersion}"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Button Style="{StaticResource PrimaryButtonStyle}"
+                        Text="Update Account"
+                        Command="{Binding SignUpCommand}" VerticalOptions="End"
+                        HeightRequest="50"/>
+
+                </StackLayout>
+
+            </pv:PancakeView>
+
+        </RelativeLayout>
+        <BoxView x:Name="Filter"
+                     AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="All"
+                     BackgroundColor="#d3d3d3"
+                     IsVisible="{Binding IsBusy}"
+                     Opacity="0.60" />
+        <ActivityIndicator  IsRunning="True"
+                            VerticalOptions="CenterAndExpand"
+                            IsVisible="{Binding IsBusy}"
+                            HorizontalOptions="CenterAndExpand"
+                             AbsoluteLayout.LayoutBounds="0.5,0.5,0.5,0.5"
+                                        AbsoluteLayout.LayoutFlags="All"/>
+    </AbsoluteLayout>
+</ContentPage>

@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+            xmlns:vm="clr-namespace:FoodApp.ViewModels"
+            xmlns:model="clr-namespace:FoodApp.Models"
+            xmlns:md="clr-namespace:FoodApp.MaterialDesign"
+            xmlns:res="clr-namespace:FoodApp.Resources"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             Padding="5"
+             x:Class="FoodApp.CustomViews.ItemView">
+    <pv:PancakeView CornerRadius="20, 20, 20, 20"
+                BackgroundColor="{AppThemeBinding Light={StaticResource CardColorLight},
+                    Dark={StaticResource CardColorDark}}">
+
+        <Grid RowDefinitions="*, 2*, *, 2*"
+                  ColumnDefinitions="55, 55, 55"
+                  ColumnSpacing="0"
+                  RowSpacing="0"
+                  VerticalOptions="FillAndExpand">
+
+            <ffimageloading:CachedImage Source="{Binding Image}"
+                        IsOpaque="True"
+                    CacheDuration="50"
+                    DownsampleToViewSize="True"
+                    RetryCount="3"
+                    RetryDelay="600"
+                   Aspect="AspectFill"
+                   Grid.ColumnSpan="3"
+                   Grid.RowSpan="3"/>
+
+            <Label Text="{x:Static md:Icons.Favorite}"
+                   IsVisible="{Binding IsFavorite}"
+                   TextColor="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                        Dark={StaticResource PrimaryColorDark}}"
+                   FontFamily="Material"
+                   FontSize="30"
+                   VerticalTextAlignment="Center"
+                   HorizontalTextAlignment="Center"/>
+
+            <pv:PancakeView CornerRadius="10"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                               Dark={StaticResource PrimaryColorDark}}"
+                            Margin="5"
+                            Padding="5"
+                            HorizontalOptions="End"
+                            VerticalOptions="End"
+                            Grid.ColumnSpan="3"
+                            Grid.Row="2">
+
+                <StackLayout Orientation="Horizontal">
+
+                    <Label Text="{Binding RegularPrice, StringFormat={x:Static res:AppResources.ShortenCurrency}}"
+                           IsVisible="{Binding OnSale}"
+                           TextDecorations="Strikethrough"
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorOnPrimaryLight},
+                                Dark={StaticResource TextColorOnPrimaryDark}}"
+                           FontSize="Micro"
+                           MaxLines="1"
+                           HorizontalTextAlignment="Center"
+                           VerticalTextAlignment="End"/>
+
+                    <Label Text="{Binding Price, StringFormat={x:Static res:AppResources.ShortenCurrency}}"
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorOnPrimaryLight},
+                                Dark={StaticResource TextColorOnPrimaryDark}}"
+                           FontSize="Small"
+                           FontAttributes="Bold"
+                           MaxLines="1"
+                           HorizontalTextAlignment="Center"
+                           VerticalTextAlignment="End"/>
+
+                </StackLayout>
+
+            </pv:PancakeView>
+
+            <StackLayout Grid.Row="3"
+                         Grid.ColumnSpan="3"
+                         Padding="5"
+                         BackgroundColor="#f3f3f3">
+
+                <Label Text="{Binding Name}"
+                       Style="{StaticResource BoldSmallPrimaryLabelStyle}"
+                       LineBreakMode="WordWrap"
+                       MaxLines="2"
+                       HorizontalOptions="FillAndExpand"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"/>
+
+                <Label Text="{Binding Description}"
+                       Style="{StaticResource MicroSecondaryLabelStyle}"
+                       LineBreakMode="WordWrap"
+                       MaxLines="2"
+                       HorizontalOptions="FillAndExpand"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"/>
+
+            </StackLayout>
+
+            <Grid.GestureRecognizers>
+
+                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                      Command="{Binding Source={RelativeSource
+                                                            AncestorType={x:Type vm:HomeViewModel}},
+                                                            Path=ItemCommand}"
+
+                                      CommandParameter="{Binding .}"/>
+
+            </Grid.GestureRecognizers>
+
+        </Grid>
+
+    </pv:PancakeView>
+</ContentView>
