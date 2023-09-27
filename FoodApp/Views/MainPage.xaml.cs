@@ -22,7 +22,14 @@ namespace FoodApp
         {
             MessagingCenter.Unsubscribe<object>(this, "CloseMenu");
             MessagingCenter.Subscribe<object>(this, "CloseMenu", (sender) => {
-                IsPresented = false;
+                try
+                {
+                    IsPresented = false;
+                }
+                catch(Exception ex)
+                {
+
+                }
             });
 
             MessagingCenter.Unsubscribe<object>(this, "OpenMenu");

@@ -1,9 +1,11 @@
-﻿using System;
+﻿using FoodApp.Interface;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace FoodApp.Helpers
 {
@@ -34,18 +36,7 @@ namespace FoodApp.Helpers
         }
         public static async Task ClearCachedFiles()
         {
-            string cacheDirectory = Path.Combine(FileSystem.CacheDirectory, GetDefaultCacheDirectory());
-            if (Directory.Exists(cacheDirectory))
-            {
-                try
-                {
-                    Directory.Delete(cacheDirectory, true);
-                }
-                catch (Exception ex)
-                {
-                    // Handle exception if needed
-                }
-            }
+            DependencyService.Get<ICached>().ClearCached();
         }
 
         public static string GetDefaultCacheDirectory()

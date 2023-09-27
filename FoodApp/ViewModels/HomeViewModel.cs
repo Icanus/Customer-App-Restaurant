@@ -163,13 +163,21 @@ namespace FoodApp.ViewModels
         public HomeViewModel()
         {
             Communication();
+            //try
+            //{
+            //    if (!string.IsNullOrEmpty(Globals.LastAppUsageDateTimeTempt))
+            //    {
+            //        TimeSpan totalTimeSlept = DateTime.Now - DateTime.Parse(Globals.LastAppUsageDateTimeTempt);
 
-            TimeSpan totalTimeSlept = DateTime.Now - DateTime.Parse(Globals.LastAppUsageDateTimeTempt);
+            //        if (totalTimeSlept.Minutes >= Globals.timeOut && (Globals.IsLogin || Globals.IsLoginByGoogle))
+            //        {
+            //            logoutFunction();
+            //        }
+            //    }
+            //}catch(Exception e)
+            //{
 
-            if (totalTimeSlept.Minutes >= Globals.timeOut && (Globals.IsLogin || Globals.IsLoginByGoogle))
-            {
-                logoutFunction();
-            }
+            //}
             //Address = Globals.Addresses[0].Address1;
             Banners = new ObservableCollection<Banner>();
             Categories = new ObservableCollection<Category>();
@@ -243,13 +251,14 @@ namespace FoodApp.ViewModels
             itemsPage.Title = title;
             await Navigation.PushAsync(itemsPage);
         }
-
+        bool IsRunningGetOngoingOrdersAsync = false;
         async Task GetOngoingOrdersAsync()
         {
             try
             {
-                GC.Collect();
-
+                if (IsRunningGetOngoingOrdersAsync)
+                    return;
+                IsRunningGetOngoingOrdersAsync = true;
                 var ongoing = await JsonWebApiAction.GetOngoingOrder(Globals.LoggedCustomerId);
 
                 if (ongoing != null && ongoing.Any())
@@ -276,12 +285,12 @@ namespace FoodApp.ViewModels
                     // Schedule a timer to periodically refresh ongoing orders
                     Device.StartTimer(TimeSpan.FromSeconds(5), () =>
                     {
-                        GC.Collect();
                         OngoingOrders = ongoing;
                         var hasValue = true;
                         if (!Globals.IsLogin)
                         {
                             HasOrders = false;
+                            IsRunningGetOngoingOrdersAsync = false;
                             return false;
                         }
 
@@ -304,6 +313,7 @@ namespace FoodApp.ViewModels
             }
             catch (Exception ex)
             {
+                IsRunningGetOngoingOrdersAsync = false;
                 // Handle exceptions gracefully and log them
                 Console.WriteLine($"An error occurred in GetOngoingOrdersAsync: {ex.Message}");
             }
@@ -319,19 +329,20 @@ namespace FoodApp.ViewModels
 
                 if (ongoing1 != null && ongoing1.Any())
                 {
+                    if (!Globals.IsLogin)
+                    {
+                        HasOrders = false;
+                        IsRunningGetOngoingOrdersAsync = false;
+                    }
+                    else
+                    {
+                        HasOrders = true;
+                        OngoingOrders = ongoing1;
+                    }
+
+                    Globals.OngoingOrder = OngoingOrders;
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        if (!Globals.IsLogin)
-                        {
-                            HasOrders = false;
-                        }
-                        else
-                        {
-                            HasOrders = true;
-                            OngoingOrders = ongoing1;
-                        }
-
-                        Globals.OngoingOrder = OngoingOrders;
                         RefreshMargin = new Thickness(0);
 
                         MessagingCenter.Unsubscribe<object>(this, "updateOngoingOrdersView");
@@ -348,10 +359,11 @@ namespace FoodApp.ViewModels
                 }
                 else
                 {
+                    HasOrders = false;
+                    IsRunningGetOngoingOrdersAsync = false;
+                    Globals.OngoingOrder = null;
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        HasOrders = false;
-                        Globals.OngoingOrder = null;
                         RefreshMargin = new Thickness(0);
                     });
 
@@ -521,7 +533,10 @@ namespace FoodApp.ViewModels
 
             MessagingCenter.Unsubscribe<object>(this, "OnSleepLogout");
             MessagingCenter.Subscribe<object>(this, "OnSleepLogout", (sender) => {
-                logoutFunction();
+                if (Globals.IsLogin || Globals.IsLoginByGoogle)
+                {
+                    logoutFunction();
+                }
             });
             
         }
@@ -556,11 +571,18 @@ namespace FoodApp.ViewModels
             RefreshMargin = new Thickness(0);
             if (Device.RuntimePlatform == Device.Android)
             {
-                IGoogleManager _googleManager = DependencyService.Get<IGoogleManager>();
-                if (Globals.IsLoginByGoogle)
+                try
                 {
-                    Globals.IsLoginByGoogle = false;
-                    _googleManager.Logout();
+                    IGoogleManager _googleManager = DependencyService.Get<IGoogleManager>();
+                    if (Globals.IsLoginByGoogle)
+                    {
+                        Globals.IsLoginByGoogle = false;
+                        _googleManager.Logout();
+                    }
+                }
+                catch(Exception e)
+                {
+
                 }
             }
             //await App.RestaurantDatabase.DeleteAllCartItemsAsync(Globals.LoggedCustomerId);
@@ -620,6 +642,12 @@ namespace FoodApp.ViewModels
 
                 // Fetch and update categories
                 var categories = await App.RestaurantDatabase.GetCategoryAsync(null);
+                if(categories.Count() == 0)
+                {
+                    Globals.IsInitialized = false;
+                    await ExecuteLoadPageCommand();
+                    return;
+                }
                 UpdateCategories(categories);
 
                 // Fetch and update featured items

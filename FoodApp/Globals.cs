@@ -72,37 +72,37 @@ namespace FoodApp
         public static string StoreLat = "-18.112000";
         public static string StoreLon = "178.468600";
 
-        private const string AppWentToSleepDateTimeKey = "AppWentToSleepDateTime";
-        public static string AppWentToSleepDateTime
-        {
-            get
-            {
-                if (Preferences.ContainsKey(nameof(AppWentToSleepDateTimeKey)))
-                    return JsonConvert.DeserializeObject<string>(Preferences.Get(nameof(AppWentToSleepDateTimeKey), null));
-                return string.Empty;
-            }
-            set => Preferences.Set(nameof(AppWentToSleepDateTimeKey), JsonConvert.SerializeObject(value));
-        }
-        public static string LastAppUsageDateTime
-        {
-            get
-            {
-                if (Preferences.ContainsKey(nameof(LastAppUsageDateTime)))
-                    return JsonConvert.DeserializeObject<string>(Preferences.Get(nameof(LastAppUsageDateTime), null));
-                return string.Empty;
-            }
-            set => Preferences.Set(nameof(LastAppUsageDateTime), JsonConvert.SerializeObject(value));
-        }
-        public static string LastAppUsageDateTimeTempt
-        {
-            get
-            {
-                if (Preferences.ContainsKey(nameof(LastAppUsageDateTimeTempt)))
-                    return JsonConvert.DeserializeObject<string>(Preferences.Get(nameof(LastAppUsageDateTimeTempt), null));
-                return string.Empty;
-            }
-            set => Preferences.Set(nameof(LastAppUsageDateTimeTempt), JsonConvert.SerializeObject(value));
-        }
-        public static int timeOut = 30;
+        //private const string AppWentToSleepDateTimeKey = "AppWentToSleepDateTime";
+        //public static string AppWentToSleepDateTime
+        //{
+        //    get
+        //    {
+        //        if (Preferences.ContainsKey(nameof(AppWentToSleepDateTimeKey)))
+        //            return JsonConvert.DeserializeObject<string>(Preferences.Get(nameof(AppWentToSleepDateTimeKey), null));
+        //        return string.Empty;
+        //    }
+        //    set => Preferences.Set(nameof(AppWentToSleepDateTimeKey), JsonConvert.SerializeObject(value));
+        //}
+        //public static string LastAppUsageDateTime
+        //{
+        //    get
+        //    {
+        //        if (Preferences.ContainsKey(nameof(LastAppUsageDateTime)))
+        //            return JsonConvert.DeserializeObject<string>(Preferences.Get(nameof(LastAppUsageDateTime), null));
+        //        return string.Empty;
+        //    }
+        //    set => Preferences.Set(nameof(LastAppUsageDateTime), JsonConvert.SerializeObject(value));
+        //}
+        //public static string LastAppUsageDateTimeTempt
+        //{
+        //    get
+        //    {
+        //        if (Preferences.ContainsKey(nameof(LastAppUsageDateTimeTempt)))
+        //            return JsonConvert.DeserializeObject<string>(Preferences.Get(nameof(LastAppUsageDateTimeTempt), null));
+        //        return string.Empty;
+        //    }
+        //    set => Preferences.Set(nameof(LastAppUsageDateTimeTempt), JsonConvert.SerializeObject(value));
+        //}
+        //public static int timeOut = 30;
     }
 }

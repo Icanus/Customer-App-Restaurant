@@ -66,6 +66,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderer\BorderlessEditorRenderer.cs" />
+    <Compile Include="Renderer\CachedService.cs" />
     <Compile Include="Renderer\CustomEntryRenderer.cs" />
     <Compile Include="Renderer\CustomMapRenderer.cs" />
     <Compile Include="Renderer\CustomMKAnnotationView.cs" />

@@ -49,7 +49,7 @@ namespace FoodApp.ViewModels
         {
             Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
             IsNotConnected = Connectivity.NetworkAccess != NetworkAccess.Internet;
-            Globals.LastAppUsageDateTime = DateTime.Now.ToString("MM/dd/yyyy h:mm:ss tt");
+            //Globals.LastAppUsageDateTime = DateTime.Now.ToString("MM/dd/yyyy h:mm:ss tt");
         }
 
         ~BaseViewModel()

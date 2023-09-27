@@ -141,6 +141,7 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Renderer\BorderlessEditorRenderer.cs" />
     <Compile Include="Renderer\BorderRenderer.cs" />
+    <Compile Include="Renderer\CachedService.cs" />
     <Compile Include="Renderer\CustomEntryRenderer.cs" />
     <Compile Include="Renderer\CustomMapRenderer.cs" />
     <Compile Include="Renderer\CustomPickerRenderer.cs" />
@@ -192,9 +193,6 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\scooter.gif" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\mylocation.png" />
   </ItemGroup>
   <ItemGroup>
@@ -210,13 +208,7 @@
     <AndroidResource Include="Resources\drawable\banner_food1.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\banner_food1.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\banner_food2.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\banner_food2.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\cat_burger.jpg" />
@@ -228,7 +220,7 @@
     <AndroidResource Include="Resources\drawable\cat_meat.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\cat_menu.jpg" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\cat_menu.jpg" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\cat_pasta.jpg" />
@@ -276,7 +268,7 @@
     <AndroidResource Include="Resources\drawable\mi_chicken_burger.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\mi_chicken_burger_menu.jpg" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\mi_chicken_burger_menu.jpg" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\mi_chicken_fajitas.jpg" />
@@ -297,10 +289,10 @@
     <AndroidResource Include="Resources\drawable\mi_double_burger_menu.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\mi_double_chicken_burger.jpg" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\mi_double_chicken_burger.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\mi_double_chicken_burger_menu.jpg" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\mi_double_chicken_burger_menu.jpg" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\mi_ginger_carrot_cake.jpg" />
@@ -327,7 +319,7 @@
     <AndroidResource Include="Resources\drawable\mi_napolitan_pasta.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\mi_noodle_chicken.jpg" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\mi_noodle_chicken.jpg" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\mi_profiterole.jpg" />
@@ -336,7 +328,7 @@
     <AndroidResource Include="Resources\drawable\mi_salted_caramel_brownie.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\mi_spaghetti_bolognese.jpg" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\mi_spaghetti_bolognese.jpg" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\mi_supangle.jpg" />
@@ -348,7 +340,7 @@
     <AndroidResource Include="Resources\drawable\mi_tenderloin_mushroom.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\mi_thai_salad.jpg" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\mi_thai_salad.jpg" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\mi_tuna_salad.jpg" />

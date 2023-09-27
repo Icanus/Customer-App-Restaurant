@@ -101,14 +101,12 @@
                                             <fftransformations:CircleTransformation/>
                                         </ffimageloading:CachedImage.Transformations>
                                     </ffimageloading:CachedImage>
-                                    <Label Text="Welcome Clark" Grid.Row="1" HorizontalTextAlignment="Center" Style="{StaticResource SmallTertiaryLabelStyle}">
-                                        <Label.FormattedText>
-                                            <FormattedString>
-                                                <Span Text="Welcome "/>
-                                                <Span Text="{Binding FullName}"/>
-                                            </FormattedString>
-                                        </Label.FormattedText>
-                                    </Label>
+                                    <Grid Grid.Row="1">
+                                        <Label Text="Welcome"  Grid.Column="0" HorizontalTextAlignment="End" Style="{StaticResource SmallTertiaryLabelStyle}">
+                                        </Label>
+                                        <Label Text="{Binding FullName}"  Grid.Column="1" HorizontalTextAlignment="Start" Style="{StaticResource SmallTertiaryLabelStyle}">
+                                        </Label>
+                                    </Grid>
                                 </Grid>
 
                             </pv:PancakeView>
